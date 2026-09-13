@@ -46,8 +46,12 @@ The first invocation compiles the extension (Pixi downloads the toolchain,
 builds, and caches). Subsequent runs are instant unless a `.cu`, `.py`, or
 CMake file changes.
 
-Representative output from `pixi run bench` on an RTX 4060 Laptop GPU
-(times include host to device copies):
+Representative output from `pixi run bench` on an RTX 4060 Laptop GPU. Each
+row times the full `n × n` distance matrix for `n` points in `d` dimensions
+(a float32 array of shape `(n, d)`), so the work grows as `n² · d`. The CUDA
+times include host to device copies. The NumPy broadcasting reference is
+skipped for the larger `n` because its `(n, n, d)` intermediate would need
+tens of GB of memory.
 
 ```
       n    d |     numpy     scipy   sklearn      cuda | speedup vs scipy
