@@ -76,6 +76,10 @@ From here the package can be `pixi publish`ed to a prefix.dev channel or install
 - The rich platform entry `{ platform = "linux-64", cuda = "13" }` tells the solver that this machine has a CUDA 13 driver, which is what lets it pick GPU-enabled builds.
 - `CMakeLists.txt` uses `nanobind_add_module` on a `.cu` source. CMake's CUDA language support drives `nvcc`; nanobind handles the Python side.
 
+## Read the book
+
+The `book/` directory is a [MyST](https://mystmd.org/) Jupyter Book that walks through every file and every command output in this repository, so it can be followed without a GPU. Build it with `pixi run docs-build`, which writes static HTML to `book/_build/html`, or serve it locally with live reload using `pixi run docs-start`.
+
 ## Requirements
 
 Linux (x86-64) with an NVIDIA GPU and a CUDA 13 driver. No system CUDA toolkit needed.

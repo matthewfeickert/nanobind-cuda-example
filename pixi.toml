@@ -22,8 +22,12 @@ scikit-learn = ">=1.7"
 [feature.test.dependencies]
 pytest = ">=8"
 
+[feature.docs.dependencies]
+mystmd = ">=1.10"
+
 [environments]
 test = ["test"]
+docs = { features = ["docs"], no-default-feature = true }
 
 # ── Tasks ───────────────────────────────────────────────────────────────────
 [tasks.demo]
@@ -37,6 +41,16 @@ description = "Time pairwise distances: NumPy vs SciPy vs scikit-learn vs the CU
 [feature.test.tasks.test]
 cmd = "pytest -v src/gpu-pairwise/tests"
 description = "Check the CUDA kernel against scipy.spatial.distance.cdist"
+
+[feature.docs.tasks.docs-build]
+cmd = "myst build --html"
+cwd = "book"
+description = "Build the book as static HTML into book/_build/html"
+
+[feature.docs.tasks.docs-start]
+cmd = "myst start"
+cwd = "book"
+description = "Serve the book locally with live reload"
 
 # Pin which CUDA compiler package the build backend resolves
 # `compilers = ["cuda"]` to. On conda-forge, CUDA 12+ compilers live in

@@ -1,0 +1,35 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  title: Packaging a CUDA kernel for Python with Pixi Build
+  description: |
+    A walkthrough of one Pixi workspace that compiles a CUDA kernel into a Python extension module with nanobind and scikit-build-core, and turns it into a conda package with Pixi Build.
+    Every command output shown was captured from a real run, so the material can be followed without a GPU at hand.
+  keywords: [pixi, pixi-build, cuda, nanobind, scikit-build-core, conda, python, reproducible]
+  authors:
+    - name: "Matthew Feickert"
+      id: matthew-feickert
+      affiliations:
+        - id: uw-madison
+          institution: University of Wisconsin-Madison
+          department: Data Science Institute
+      orcid: "0000-0003-4124-7862"
+      github: matthewfeickert
+  github: https://github.com/matthewfeickert/nanobind-cuda-example
+  abbreviations:
+    CUDA: "Compute Unified Device Architecture"
+    GPU: "Graphics Processing Unit"
+    CPU: "Central Processing Unit"
+    ABI: "Application Binary Interface"
+    TOML: "Tom's Obvious, Minimal Language"
+  toc:
+    - file: index.md
+    - file: workspace.md
+    - file: package.md
+    - file: kernel.md
+    - file: running.md
+    - file: distributing.md
+    - file: next-steps.md
+
+site:
+  template: book-theme
