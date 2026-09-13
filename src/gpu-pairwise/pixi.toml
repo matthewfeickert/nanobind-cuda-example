@@ -1,0 +1,28 @@
+# ── The gpu-pairwise package: what `pixi build` turns into a .conda file ───
+# A *package* manifest only (no `[workspace]`). Name, version and runtime
+# dependencies are read from the adjacent pyproject.toml. The workspace that
+# consumes it lives in ../../pixi.toml.
+[package.build]
+backend = { name = "pixi-build-python", version = "0.*" }
+# The extension is compiled, so we need C++ and CUDA compilers in the build
+# environment. Declaring `compilers` also makes the package platform-specific
+# instead of noarch.
+config.compilers = ["cxx", "cuda"]
+# Map `[project.dependencies]` in pyproject.toml onto conda-forge packages.
+config.ignore-pypi-mapping = false
+# Rebuild when the kernel or the CMake configuration change, not only when
+# Python files do.
+config.extra-input-globs = ["**/*.cu", "**/*.h", "CMakeLists.txt"]
+
+[package.build-dependencies]
+cmake = ">=3.26"
+ninja = "*"
+
+[package.host-dependencies]
+# Build-time Python tooling. `--no-build-isolation` means the build backend
+# does not fetch these from PyPI; they must come from here.
+scikit-build-core = ">=0.11"
+nanobind = ">=2.5"
+# Headers + libcudart to compile and link against. Its run-export makes the
+# resulting package depend on `cuda-cudart` at runtime automatically.
+cuda-cudart-dev = "*"
