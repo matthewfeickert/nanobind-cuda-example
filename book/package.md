@@ -8,8 +8,8 @@ The `CMakeLists.txt` compiles the extension.
 
 ## The package manifest
 
-```{literalinclude} ../src/gpu-pairwise/pixi.toml
-:filename: src/gpu-pairwise/pixi.toml
+```{literalinclude} ../templates/03-nanobind-cuda/src/gpu-pairwise/pixi.toml
+:filename: templates/03-nanobind-cuda/src/gpu-pairwise/pixi.toml
 :language: toml
 :linenos:
 ```
@@ -38,8 +38,8 @@ The [distributing chapter](./distributing.md) shows how they are derived from th
 
 ## The Python project
 
-```{literalinclude} ../src/gpu-pairwise/pyproject.toml
-:filename: src/gpu-pairwise/pyproject.toml
+```{literalinclude} ../templates/03-nanobind-cuda/src/gpu-pairwise/pyproject.toml
+:filename: templates/03-nanobind-cuda/src/gpu-pairwise/pyproject.toml
 :language: toml
 :linenos:
 ```
@@ -52,8 +52,8 @@ The `[tool.scikit-build]` table stops scikit-build-core from fetching its own CM
 
 ## The CMake configuration
 
-```{literalinclude} ../src/gpu-pairwise/CMakeLists.txt
-:filename: src/gpu-pairwise/CMakeLists.txt
+```{literalinclude} ../templates/03-nanobind-cuda/src/gpu-pairwise/CMakeLists.txt
+:filename: templates/03-nanobind-cuda/src/gpu-pairwise/CMakeLists.txt
 :language: cmake
 :linenos:
 ```

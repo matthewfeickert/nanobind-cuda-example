@@ -5,11 +5,11 @@ A manifest with a `[workspace]` table describes your development environment: ch
 A manifest with a `[package]` table and no `[workspace]` table describes how to build one distributable conda package.
 The [Pixi manifest reference](https://pixi.prefix.dev/latest/reference/pixi_manifest/) covers both roles in full.
 
-This chapter is about the workspace.
-It lives at the top of the repository.
+This chapter is about the stage 3 workspace, `templates/03-nanobind-cuda/pixi.toml`.
+It is the same shape as the stage 1 and stage 2 workspaces, with two additions that only a compiled CUDA extension needs: a source dependency that has to be built, and a build variant that pins the CUDA compiler.
 
-```{literalinclude} ../pixi.toml
-:filename: pixi.toml
+```{literalinclude} ../templates/03-nanobind-cuda/pixi.toml
+:filename: templates/03-nanobind-cuda/pixi.toml
 :language: toml
 :linenos:
 ```
@@ -35,14 +35,14 @@ Python itself is not pinned, and the solver picked Python 3.14 in the lock file.
 
 Three tasks give the reader something to run: `demo`, `bench`, and `test`.
 The `test` task lives in a `test` feature with pytest as an extra dependency and is exposed through the `test` environment, so pytest never ends up in the default environment.
-The `docs` feature does the same for this book with [mystmd](https://mystmd.org/).
+The umbrella workspace at the top of the repository does the same for this book with a `docs` feature and [mystmd](https://mystmd.org/).
 
 ## Build variants
 
 The last table is the one that ties the workspace to the CUDA toolchain.
 
-```{literalinclude} ../pixi.toml
-:filename: pixi.toml
+```{literalinclude} ../templates/03-nanobind-cuda/pixi.toml
+:filename: templates/03-nanobind-cuda/pixi.toml
 :language: toml
 :start-at: workspace.build-variants
 ```

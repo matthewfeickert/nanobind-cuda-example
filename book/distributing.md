@@ -7,7 +7,7 @@ This chapter builds it as a standalone `.conda` file and reads back what Pixi re
 
 ```{code} console
 :filename: shell
-$ pixi build --path src/gpu-pairwise -o dist
+$ pixi build --path templates/03-nanobind-cuda/src/gpu-pairwise -o dist
 ```
 
 The output is the same build the workspace ran on first install, followed by the packaging step.
@@ -81,6 +81,7 @@ It needs a glibc no older than the sysroot it was built with.
 
 None of that was written by hand.
 The manifest listed one CUDA host dependency and let conda-forge's run-exports do the rest.
+Compare the `depends` list of the [stage 2 package](./stage-cuda-python.md), where the only CUDA constraint is the one its author remembered to type.
 Rebuilding for a different Python or CUDA version is a matter of changing the pins in the workspace and running `pixi build` again.
 
 ## Where the package can go

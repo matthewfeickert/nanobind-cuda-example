@@ -3,9 +3,9 @@ version: 1
 project:
   title: Packaging a CUDA kernel for Python with Pixi Build
   description: |
-    A walkthrough of one Pixi workspace that compiles a CUDA kernel into a Python extension module with nanobind and scikit-build-core, and turns it into a conda package with Pixi Build.
+    A walkthrough of one example package in three stages, from NumPy to a runtime-compiled kernel driven by cuda-python to a nanobind extension module compiled ahead of time and turned into a conda package with Pixi Build.
     Every command output shown was captured from a real run, so the material can be followed without a GPU at hand.
-  keywords: [pixi, pixi-build, cuda, nanobind, scikit-build-core, conda, python, reproducible]
+  keywords: [pixi, pixi-build, cuda, cuda-python, nanobind, scikit-build-core, conda, python, reproducible]
   authors:
     - name: "Matthew Feickert"
       id: matthew-feickert
@@ -22,8 +22,14 @@ project:
     CPU: "Central Processing Unit"
     ABI: "Application Binary Interface"
     TOML: "Tom's Obvious, Minimal Language"
+    NVRTC: "NVIDIA Runtime Compilation"
+    JIT: "Just-In-Time"
+    DLPack: "an open in-memory tensor exchange protocol"
   toc:
     - file: index.md
+    - file: stages.md
+    - file: stage-numpy.md
+    - file: stage-cuda-python.md
     - file: workspace.md
     - file: package.md
     - file: kernel.md
