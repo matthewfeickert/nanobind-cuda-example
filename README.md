@@ -80,10 +80,10 @@ Stages 2 and 3 run the same kernel and stay within about 20% of each other, but 
 ## Build a distributable package
 
 ```console
-pixi build --path templates/03-nanobind-cuda/src/gpu-pairwise -o dist
+pixi publish --path templates/03-nanobind-cuda/src/gpu-pairwise --target-channel local_channel
 ```
 
-produces `dist/gpu-pairwise-0.1.0-<hash>_0.conda`. The same command with `templates/02-cuda-python/src/pairwise-cuda-python` produces the stage 2 package, whose `depends` list contains only what its manifests wrote down. Its recorded runtime dependencies are the interesting part: the single `cuda-cudart-dev` host dependency became `cuda-cudart` and `cuda-version` pins through conda-forge run-exports, and the Python build became a `python_abi` pin.
+builds the package and writes it into `local_channel/linux-64/gpu-pairwise-0.1.0-<hash>_0.conda` alongside a `repodata.json` index, so `local_channel/` is a complete conda channel that another workspace can list next to conda-forge. Publishing to a local filesystem channel is how Pixi builds a package for inspection; the older `pixi build` command is deprecated in favour of it. The same command with `templates/02-cuda-python/src/pairwise-cuda-python` produces the stage 2 package, whose `depends` list contains only what its manifests wrote down. Its recorded runtime dependencies are the interesting part: the single `cuda-cudart-dev` host dependency became `cuda-cudart` and `cuda-version` pins through conda-forge run-exports, and the Python build became a `python_abi` pin.
 
 ```json
 "depends": [
@@ -98,7 +98,7 @@ produces `dist/gpu-pairwise-0.1.0-<hash>_0.conda`. The same command with `templa
 ]
 ```
 
-From here the package can be `pixi publish`ed to a prefix.dev channel or installed elsewhere with `pixi global install`.
+Pointing `--target-channel` at a prefix.dev channel instead publishes the same package for real, and `pixi global install` can install it from either.
 
 ## How the pieces fit
 

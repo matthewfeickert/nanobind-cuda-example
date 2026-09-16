@@ -15,4 +15,4 @@ cp -r templates/02-cuda-python my-project
 cd my-project && pixi run test
 ```
 
-Inside each directory, `pixi run demo`, `pixi run bench`, and `pixi run test` do the same thing, and `pixi build --path src/<package> -o dist` produces a standalone `.conda` file.
+Inside each directory, `pixi run demo`, `pixi run bench`, and `pixi run test` do the same thing, and `pixi publish --path src/<package> --target-channel local_channel` builds the package into a local conda channel that any other Pixi workspace can install from.

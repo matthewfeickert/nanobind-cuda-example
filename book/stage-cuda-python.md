@@ -97,11 +97,11 @@ The tests pass against `cdist` at the same tolerances as the other stages.
 
 ```{code} console
 :filename: shell
-$ pixi build --path src/pairwise-cuda-python -o dist
+$ pixi publish --path src/pairwise-cuda-python --target-channel local_channel
 ```
 
 ```{code} text
-:filename: pixi build (excerpt)
+:filename: pixi publish (excerpt)
 Resolved run dependencies(pairwise-cuda-python-0.1.0-pyh4616a5c_0):
 ╭──────────────────┬──────────────────────────╮
 │ Name             ┆ Spec                     │
@@ -123,6 +123,10 @@ Files in package:
   └─ info/paths.json (2.54 KiB)
 
 Package statistics: 17 files (11 content, 6 metadata), total size: 11.33 KiB
+
+📦 Publishing 1 package(s) to channel file:///tmp/nanobind-cuda-example/templates/02-cuda-python/local_channel
+✔ Successfully published 1 package(s) to channel file:///tmp/nanobind-cuda-example/templates/02-cuda-python/local_channel
+  - pairwise-cuda-python-0.1.0-pyh4616a5c_0.conda
 ```
 
 ```{code} json

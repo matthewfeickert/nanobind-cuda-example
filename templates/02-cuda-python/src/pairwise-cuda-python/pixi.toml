@@ -1,4 +1,4 @@
-# ── The pairwise-cuda-python package: what `pixi build` turns into a .conda file
+# ── The pairwise-cuda-python package: what `pixi publish` turns into a .conda file
 # A *package* manifest only (no `[workspace]`). Name, version and runtime
 # dependencies are read from the adjacent pyproject.toml. The workspace that
 # consumes it lives in ../../pixi.toml.
