@@ -4,7 +4,7 @@
 #     pixi-build-python backend + hatchling.
 [workspace]
 name = "numpy-baseline"
-channels = ["https://prefix.dev/conda-forge"]
+channels = ["conda-forge"]
 # Nothing here touches a GPU, so this is a plain platform string. Compare with
 # the `cuda = "13"` rich platform in stages 2 and 3.
 platforms = ["linux-64"]

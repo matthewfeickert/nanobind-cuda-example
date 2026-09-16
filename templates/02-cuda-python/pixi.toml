@@ -4,7 +4,7 @@
 #     compiled at runtime by NVRTC through cuda.core.
 [workspace]
 name = "cuda-python"
-channels = ["https://prefix.dev/conda-forge"]
+channels = ["conda-forge"]
 # Declare that this platform provides a CUDA driver (the `__cuda` virtual
 # package). Without it the solver cannot satisfy cuda-core's dependencies.
 platforms = [{ platform = "linux-64", cuda = "13" }]
