@@ -1,7 +1,7 @@
-# ── The workspace: your development environment ────────────────────────────
-# One workspace that builds one source package from ./src:
-#   * gpu-pairwise — a Python extension module (nanobind) wrapping a CUDA
-#     kernel, built through the pixi-build-python backend + scikit-build-core.
+# ── The umbrella workspace: all three stages side by side ──────────────────
+# Each stage under ./templates is a self-contained workspace of its own. This
+# manifest pulls the three packages into one environment so a single benchmark
+# can compare them, and it builds the book.
 [workspace]
 name = "nanobind-cuda-example"
 channels = ["https://prefix.dev/conda-forge"]
@@ -11,9 +11,11 @@ platforms = [{ platform = "linux-64", cuda = "13" }]
 preview = ["pixi-build"]
 
 [dependencies]
-# Our own package as a source dependency: `pixi run` and `pixi install`
-# rebuild it automatically whenever its sources change.
-gpu-pairwise = { path = "src/gpu-pairwise" }
+# The three stages as source dependencies: `pixi run` and `pixi install`
+# rebuild them automatically whenever their sources change.
+pairwise-numpy = { path = "templates/01-numpy/src/pairwise-numpy" }
+pairwise-cuda-python = { path = "templates/02-cuda-python/src/pairwise-cuda-python" }
+gpu-pairwise = { path = "templates/03-nanobind-cuda/src/gpu-pairwise" }
 # Used by the benchmark and the tests as CPU references.
 numpy = ">=2.3"
 scipy = ">=1.16"
@@ -30,17 +32,14 @@ test = ["test"]
 docs = { features = ["docs"], no-default-feature = true }
 
 # ── Tasks ───────────────────────────────────────────────────────────────────
-[tasks.demo]
-cmd = "python scripts/demo.py"
-description = "Smallest possible end-to-end use of the extension"
-
 [tasks.bench]
 cmd = "python scripts/bench.py"
-description = "Time pairwise distances: NumPy vs SciPy vs scikit-learn vs the CUDA kernel"
+description = "Time all three stages against SciPy and scikit-learn"
 
 [feature.test.tasks.test]
-cmd = "pytest -v src/gpu-pairwise/tests"
-description = "Check the CUDA kernel against scipy.spatial.distance.cdist"
+cmd = "pytest -v --import-mode=importlib --rootdir . templates/01-numpy/src/pairwise-numpy/tests templates/02-cuda-python/src/pairwise-cuda-python/tests templates/03-nanobind-cuda/src/gpu-pairwise/tests"
+# importlib mode because the three suites share the file name test_pairwise.py.
+description = "Run the test suites of all three stages"
 
 [feature.docs.tasks.docs-build]
 cmd = "myst build --html"
@@ -53,8 +52,8 @@ cwd = "book"
 description = "Serve the book locally with live reload"
 
 # Pin which CUDA compiler package the build backend resolves
-# `compilers = ["cuda"]` to. On conda-forge, CUDA 12+ compilers live in
-# the `cuda-nvcc` packages.
+# `compilers = ["cuda"]` to for stage 3. On conda-forge, CUDA 12+ compilers
+# live in the `cuda-nvcc` packages.
 [workspace.build-variants]
 cuda_compiler = ["cuda-nvcc"]
 cuda_compiler_version = ["13.1"]
