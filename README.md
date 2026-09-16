@@ -61,6 +61,7 @@ At the top of the repository, the umbrella workspace pulls all three packages in
 ```console
 pixi run bench    # all three stages side by side
 pixi run test     # all three test suites
+pixi run lint     # the pre-commit hooks, via prek, on every file
 ```
 
 The first invocation of stage 3 compiles the extension (Pixi downloads the toolchain, builds, and caches). Subsequent runs are instant unless a `.cu`, `.py`, or CMake file changes. Stage 2 compiles its kernel with NVRTC on the first call instead.

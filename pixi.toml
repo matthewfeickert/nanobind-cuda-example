@@ -27,9 +27,13 @@ pytest = ">=8"
 [feature.docs.dependencies]
 mystmd = ">=1.10"
 
+[feature.lint.dependencies]
+prek = ">=0.5"
+
 [environments]
 test = ["test"]
 docs = { features = ["docs"], no-default-feature = true }
+lint = { features = ["lint"], no-default-feature = true }
 
 # ── Tasks ───────────────────────────────────────────────────────────────────
 [tasks.bench]
@@ -50,6 +54,10 @@ description = "Build the book as static HTML into book/_build/html"
 cmd = "myst start"
 cwd = "book"
 description = "Serve the book locally with live reload"
+
+[feature.lint.tasks.lint]
+cmd = "prek run --all-files"
+description = "Run the pre-commit hooks in .pre-commit-config.yaml on every file"
 
 # Pin which CUDA compiler package the build backend resolves
 # `compilers = ["cuda"]` to for stage 3. On conda-forge, CUDA 12+ compilers

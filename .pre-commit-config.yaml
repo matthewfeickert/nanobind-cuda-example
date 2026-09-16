@@ -1,4 +1,5 @@
-# Run with prek: `prek run --all-files` (or `prek install` to run on every commit).
+# Run with `pixi run lint`, which is `prek run --all-files` in the `lint`
+# environment, or `prek install` to run the hooks on every commit.
 ci:
   autoupdate_commit_msg: "chore: update pre-commit hooks"
   autofix_commit_msg: "style: pre-commit fixes"
