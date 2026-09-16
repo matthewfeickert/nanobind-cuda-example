@@ -44,7 +44,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/ca-certificates-2026.7.22-hbd8a1cb_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/python_abi-3.14-9_cp314.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tzdata-2026c-h151e31d_0.conda
-      - conda_source: pairwise-numpy[b3987030] @ packages/pairwise-numpy
+      - conda_source: pairwise-numpy[8789e021] @ packages/pairwise-numpy
   test:
     channels:
     - url: https://conda.anaconda.org/conda-forge/
@@ -91,7 +91,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/tomli-2.4.1-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/typing_extensions-4.16.0-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tzdata-2026c-h151e31d_0.conda
-      - conda_source: pairwise-numpy[b3987030] @ packages/pairwise-numpy
+      - conda_source: pairwise-numpy[8789e021] @ packages/pairwise-numpy
 packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-64/_openmp_mutex-4.5-20_gnu.conda
   build_number: 20
@@ -736,13 +736,13 @@ packages:
   run_exports: {}
   size: 118849
   timestamp: 1784250406640
-- conda_source: pairwise-numpy[b3987030] @ packages/pairwise-numpy
+- conda_source: pairwise-numpy[8789e021] @ packages/pairwise-numpy
   variants:
     target_platform: noarch
   depends:
   - python >=3.11
   - python *
-  - numpy >=2.3,<3
+  - numpy >=2.3
   license: MIT
   host_packages:
   - conda: https://conda.anaconda.org/conda-forge/linux-64/_openmp_mutex-4.5-20_gnu.conda

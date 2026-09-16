@@ -91,7 +91,7 @@ builds the package and writes it into `local_channel/linux-64/gpu-pairwise-0.1.0
 ```json
 "depends": [
     "python >=3.11",
-    "numpy >=2.3,<3",
+    "numpy >=2.3",
     "libstdcxx >=15",
     "libgcc >=15",
     "cuda-version >=13.1,<14",

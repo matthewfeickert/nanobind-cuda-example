@@ -109,7 +109,7 @@ Resolved run dependencies(pairwise-cuda-python-0.1.0-pyh4616a5c_0):
 │ Run dependencies ┆                          │
 │ cuda-core        ┆ >=1.2                    │
 │ cuda-version     ┆ 13.*                     │
-│ numpy            ┆ >=2.3,<3                 │
+│ numpy            ┆ >=2.3                    │
 │ python           ┆ >=3.11                   │
 │                  ┆ * (RE of [host: python]) │
 ╰──────────────────┴──────────────────────────╯
@@ -140,7 +140,7 @@ $ rattler-build package inspect $(find ./local_channel/ -type f -iname '*pairwis
 
 ```{code} text
 :filename: rattler-build package inspect (excerpt)
- Package: ./local_channel/noarch/pairwise-cuda-python-0.1.0-pyh4616a5c_0.conda (5.96 KiB)
+ Package: ./local_channel/noarch/pairwise-cuda-python-0.1.0-pyh4616a5c_0.conda (5.94 KiB)
 
  Run dependencies:
  ╭───────────────────╮
@@ -149,7 +149,7 @@ $ rattler-build package inspect $(find ./local_channel/ -type f -iname '*pairwis
  │ cuda-version 13.* │
  │ python >=3.11     │
  │ python *          │
- │ numpy >=2.3,<3    │
+ │ numpy >=2.3       │
  │ cuda-core >=1.2   │
  ╰───────────────────╯
 ```
@@ -165,7 +165,7 @@ The full `info/index.json` it summarises is short enough to read whole.
         "cuda-version 13.*",
         "python >=3.11",
         "python *",
-        "numpy >=2.3,<3",
+        "numpy >=2.3",
         "cuda-core >=1.2"
     ],
     "license": "MIT",

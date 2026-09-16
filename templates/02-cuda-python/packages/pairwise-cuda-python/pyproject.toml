@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
 dependencies = [
-    "numpy>=2.3,<3",
+    "numpy>=2.3",
     "cuda-core>=1.2",
 ]
 

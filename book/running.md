@@ -51,7 +51,7 @@ Resolved run dependencies(gpu-pairwise-0.1.0-hb4504ce_0):
 │ cuda-version     ┆ >=13.1,<14 (RE of [build: cuda-nvcc_linux-64])    │
 │ libgcc           ┆ >=15 (RE of [build: gxx_linux-64])                │
 │ libstdcxx        ┆ >=15 (RE of [build: gxx_linux-64])                │
-│ numpy            ┆ >=2.3,<3                                          │
+│ numpy            ┆ >=2.3                                             │
 │ python           ┆ >=3.11                                            │
 │ python_abi       ┆ 3.14.* *_cp314 (RE of [host: python])             │
 ╰──────────────────┴───────────────────────────────────────────────────╯

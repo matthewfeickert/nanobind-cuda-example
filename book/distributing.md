@@ -84,7 +84,7 @@ $ rattler-build package inspect $(find ./local_channel/ -type f -iname '*pairwis
 
 ```{code} text
 :filename: rattler-build package inspect
- Package: ./local_channel/linux-64/gpu-pairwise-0.1.0-hb4504ce_0.conda (279.65 KiB)
+ Package: ./local_channel/linux-64/gpu-pairwise-0.1.0-hb4504ce_0.conda (280.00 KiB)
 
  ╭──────────────┬───────────────────────────────────────────────────────────────────────────────────────────╮
  │ Property     ┆ Value                                                                                     │
@@ -94,7 +94,7 @@ $ rattler-build package inspect $(find ./local_channel/ -type f -iname '*pairwis
  │ Build        ┆ hb4504ce_0                                                                                │
  │ Build number ┆ 0                                                                                         │
  │ Subdir       ┆ linux-64                                                                                  │
- │ Timestamp    ┆ 2026-09-16 17:53:38 UTC                                                                   │
+ │ Timestamp    ┆ 2026-09-16 20:34:06 UTC                                                                   │
  │ License      ┆ MIT                                                                                       │
  │ Summary      ┆ Pairwise Euclidean distances on the GPU: a CUDA kernel exposed to NumPy through nanobind. │
  │ Description  ┆ Pairwise Euclidean distances on the GPU: a CUDA kernel exposed to NumPy through nanobind. │
@@ -105,7 +105,7 @@ $ rattler-build package inspect $(find ./local_channel/ -type f -iname '*pairwis
  │ Package                       │
  ╞═══════════════════════════════╡
  │ python >=3.11                 │
- │ numpy >=2.3,<3                │
+ │ numpy >=2.3                   │
  │ libstdcxx >=15                │
  │ libgcc >=15                   │
  │ cuda-version >=13.1,<14       │
@@ -128,7 +128,7 @@ Its `depends` list is the payoff for the whole exercise.
     "build_number": 0,
     "depends": [
         "python >=3.11",
-        "numpy >=2.3,<3",
+        "numpy >=2.3",
         "libstdcxx >=15",
         "libgcc >=15",
         "cuda-version >=13.1,<14",
