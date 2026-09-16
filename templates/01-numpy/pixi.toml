@@ -1,0 +1,38 @@
+# ── Stage 1: the NumPy workspace ───────────────────────────────────────────
+# One workspace that builds one source package from ./src:
+#   * pairwise-numpy — a pure Python package, built through the
+#     pixi-build-python backend + hatchling.
+[workspace]
+name = "numpy-baseline"
+channels = ["https://prefix.dev/conda-forge"]
+# Nothing here touches a GPU, so this is a plain platform string. Compare with
+# the `cuda = "13"` rich platform in stages 2 and 3.
+platforms = ["linux-64"]
+preview = ["pixi-build"]
+
+[dependencies]
+# Our own package as a source dependency: `pixi run` and `pixi install`
+# rebuild it automatically whenever its sources change.
+pairwise-numpy = { path = "src/pairwise-numpy" }
+numpy = ">=2.3"
+# The reference implementation the benchmark and the tests compare against.
+scipy = ">=1.16"
+
+[feature.test.dependencies]
+pytest = ">=8"
+
+[environments]
+test = ["test"]
+
+# ── Tasks ───────────────────────────────────────────────────────────────────
+[tasks.demo]
+cmd = "python scripts/demo.py"
+description = "Smallest possible end-to-end use of the package"
+
+[tasks.bench]
+cmd = "python scripts/bench.py"
+description = "Time pairwise distances: NumPy broadcasting vs SciPy"
+
+[feature.test.tasks.test]
+cmd = "pytest -v src/pairwise-numpy/tests"
+description = "Check the NumPy implementation against scipy.spatial.distance.cdist"

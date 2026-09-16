@@ -1,0 +1,15 @@
+# ── The pairwise-numpy package: what `pixi build` turns into a .conda file ─
+# A *package* manifest only (no `[workspace]`). Name, version and runtime
+# dependencies are read from the adjacent pyproject.toml. The workspace that
+# consumes it lives in ../../pixi.toml.
+[package.build]
+backend = { name = "pixi-build-python", version = "0.*" }
+# Nothing is compiled, so no `config.compilers` line. Without one the backend
+# builds a `noarch: python` package that installs on any platform.
+# Map `[project.dependencies]` in pyproject.toml onto conda-forge packages.
+config.ignore-pypi-mapping = false
+
+[package.host-dependencies]
+# The backend runs `uv pip install --no-build-isolation`, so the PEP 517
+# build backend named in pyproject.toml has to be present already.
+hatchling = "*"
