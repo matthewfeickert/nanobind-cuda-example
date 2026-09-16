@@ -1,7 +1,7 @@
 # pixi environments and build caches
 .pixi/
 dist/
-# local conda channel written by `pixi publish --target-channel local_channel`
+# local conda channel written by `pixi publish --target-channel ./local_channel`
 local_channel/
 build/
 __pycache__/

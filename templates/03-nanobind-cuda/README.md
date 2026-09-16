@@ -6,7 +6,7 @@ The destination of the three stages. The kernel from [stage 2](../02-cuda-python
 pixi run demo     # builds gpu-pairwise on first run, then prints a 5x5 distance matrix
 pixi run bench    # NumPy vs SciPy vs scikit-learn vs the CUDA kernel
 pixi run test     # pytest against scipy.spatial.distance.cdist
-pixi publish --path src/gpu-pairwise --target-channel local_channel   # a .conda file in a local channel
+pixi publish --path src/gpu-pairwise --target-channel ./local_channel   # a .conda file in a local channel
 ```
 
 Every file in this directory is walked through in the [book](https://matthewfeickert.github.io/nanobind-cuda-example/), starting from the workspace chapter. Copy the directory out of the repository to use it as a starting point for your own extension.

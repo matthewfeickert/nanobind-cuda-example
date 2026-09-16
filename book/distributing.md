@@ -12,7 +12,7 @@ The name `local_channel` follows the direction of [pixi issue #6600](https://git
 
 ```{code} console
 :filename: shell
-$ pixi publish --path templates/03-nanobind-cuda/src/gpu-pairwise --target-channel local_channel
+$ pixi publish --path templates/03-nanobind-cuda/src/gpu-pairwise --target-channel ./local_channel
 ```
 
 The output is the same build the workspace ran on first install, followed by the packaging and indexing steps.
@@ -46,7 +46,7 @@ Package statistics: 17 files (12 content, 5 metadata), total size: 1001.52 KiB
 ```
 
 :::{note} The path in the output is yours, not ours
-A bare `--target-channel local_channel` is resolved relative to the current directory, and Pixi reports it back as an absolute `file://` URL.
+The relative path `./local_channel` is resolved against the current directory, and Pixi reports it back as an absolute `file://` URL.
 The outputs in this book were captured after cloning the repository into `/tmp`, which is why they show `file:///tmp/nanobind-cuda-example/local_channel`.
 On your machine the URL will be the absolute path of the `local_channel` directory wherever you cloned the repository, and that is the URL to use when pointing another workspace at the channel below.
 :::

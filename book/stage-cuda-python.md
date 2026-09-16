@@ -97,7 +97,7 @@ The tests pass against `cdist` at the same tolerances as the other stages.
 
 ```{code} console
 :filename: shell
-$ pixi publish --path src/pairwise-cuda-python --target-channel local_channel
+$ pixi publish --path src/pairwise-cuda-python --target-channel ./local_channel
 ```
 
 ```{code} text
