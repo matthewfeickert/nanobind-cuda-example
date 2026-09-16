@@ -62,17 +62,20 @@ pixi run test     # all three test suites
 
 The first invocation of stage 3 compiles the extension (Pixi downloads the toolchain, builds, and caches). Subsequent runs are instant unless a `.cu`, `.py`, or CMake file changes. Stage 2 compiles its kernel with NVRTC on the first call instead.
 
-Representative output from the root `pixi run bench` on an RTX 4060 Laptop GPU. Each row times the full `n × n` distance matrix for `n` points in `d` dimensions (a float32 array of shape `(n, d)`), so the work grows as `n² · d`. Both GPU columns include host to device copies.
+Representative output from the root `pixi run bench` on an RTX 4060 Laptop GPU. Each row times the full `n × n` distance matrix for `n` points in `d` dimensions (a float32 array of shape `(n, d)`), so the work grows as `n² · d`. Both GPU columns include host to device copies. The NumPy baseline is skipped above `n = 8000` because it would take minutes.
 
 ```
       n    d |     numpy     scipy   sklearn | cuda-python  nanobind | nanobind vs scipy
    1000   16 |    0.014s    0.004s    0.003s |      0.003s    0.001s |    4.5x
-   4000   16 |    0.323s    0.083s    0.050s |      0.037s    0.031s |    2.7x
-   8000   16 |    1.342s    0.326s    0.264s |      0.147s    0.116s |    2.8x
-   8000  128 |    7.863s    2.370s    0.340s |      0.253s    0.276s |    8.6x
+   4000   16 |    0.312s    0.081s    0.050s |      0.036s    0.030s |    2.7x
+   8000   16 |    1.221s    0.329s    0.274s |      0.133s    0.118s |    2.8x
+   8000  128 |    7.577s    2.376s    0.287s |      0.252s    0.276s |    8.6x
+  16000   16 |   skipped    1.343s    1.278s |      0.535s    0.466s |    2.9x
+  16000  128 |   skipped   10.116s    1.412s |      1.002s    1.104s |    9.2x
+  32000   16 |   skipped    5.307s    5.153s |      2.170s    1.752s |    3.0x
 ```
 
-Stages 2 and 3 run the same kernel and land within a few tens of milliseconds of each other. What separates them is not speed but what the package needs at build time, at runtime, and what its metadata can say about it.
+Stages 2 and 3 run the same kernel and stay within about 20% of each other, but the larger rows show where each binding pays. At `d = 16` the run is dominated by copying the `n²` result back to the host, and cuda-python is slower because the result passes through a pinned buffer and then a second copy into a NumPy array, while nanobind copies straight into the array it returns. At `d = 128` the kernel dominates and cuda-python is faster, because NVRTC compiled for this GPU's exact `sm_89` while the nanobind build for `all-major` carries no `sm_89` code and runs its `sm_80` binary instead. Neither gap is about the binding itself; both are choices that the [book](https://matthewfeickert.github.io/nanobind-cuda-example/) discusses.
 
 ## Build a distributable package
 
