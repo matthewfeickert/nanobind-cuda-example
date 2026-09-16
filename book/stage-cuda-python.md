@@ -129,6 +129,8 @@ Package statistics: 17 files (11 content, 6 metadata), total size: 11.33 KiB
   - pairwise-cuda-python-0.1.0-pyh4616a5c_0.conda
 ```
 
+The `file://` URL is the absolute path of the `local_channel` directory, reported back by Pixi; it starts with `/tmp` here only because the repository was cloned into `/tmp` when these outputs were captured.
+
 ```{code} json
 :filename: info/index.json
 {

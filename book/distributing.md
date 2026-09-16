@@ -45,6 +45,12 @@ Package statistics: 17 files (12 content, 5 metadata), total size: 1001.52 KiB
   - gpu-pairwise-0.1.0-hb4504ce_0.conda
 ```
 
+:::{note} The path in the output is yours, not ours
+A bare `--target-channel local_channel` is resolved relative to the current directory, and Pixi reports it back as an absolute `file://` URL.
+The outputs in this book were captured after cloning the repository into `/tmp`, which is why they show `file:///tmp/nanobind-cuda-example/local_channel`.
+On your machine the URL will be the absolute path of the `local_channel` directory wherever you cloned the repository, and that is the URL to use when pointing another workspace at the channel below.
+:::
+
 ```{code} text
 :filename: local_channel/
 local_channel/
@@ -110,6 +116,9 @@ Rebuilding for a different Python or CUDA version is a matter of changing the pi
 
 Because `local_channel` is a real channel, any other Pixi workspace can list it next to conda-forge and depend on the package as if it had been downloaded.
 The workspace still has to declare the CUDA driver, because the package's `cuda-version` constraint is checked against the `__cuda` virtual package like any other.
+
+The channel URL below is the absolute path to the `local_channel` directory created in the previous section.
+It only matches if you cloned the repository into `/tmp`, so substitute the `file://` URL that `pixi publish` printed for you, or build it from `$(pwd)/local_channel` while standing in the repository root.
 
 ```{code} console
 :filename: shell
