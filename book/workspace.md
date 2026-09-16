@@ -24,7 +24,7 @@ The lock file records the resulting environment under that name.
 
 ## Source dependencies
 
-The line `gpu-pairwise = { path = "src/gpu-pairwise" }` is what makes this a Pixi Build workspace rather than an ordinary one.
+The line `gpu-pairwise = { path = "packages/gpu-pairwise" }` is what makes this a Pixi Build workspace rather than an ordinary one.
 It tells Pixi that `gpu-pairwise` is not to be downloaded from a channel but built from the manifest in that directory.
 Every `pixi install` and every `pixi run` checks whether the package's input files have changed and rebuilds it if so.
 This is why the workspace needs `preview = ["pixi-build"]`.

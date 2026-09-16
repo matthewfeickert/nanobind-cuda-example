@@ -42,29 +42,32 @@ Its manifest surface is still evolving, so the backends are pinned in the manife
 nanobind-cuda-example/
 ├── pixi.toml                    # umbrella workspace: all three stages + the book
 ├── scripts/bench.py             # times the three stages against SciPy and scikit-learn
-├── book/                        # this book
+├── book/                        # MyST Jupyter Book walking through every stage
 └── templates/                   # one self-contained Pixi workspace per stage
     ├── 01-numpy/
     │   ├── pixi.toml            #   workspace: plain linux-64, no GPU
     │   ├── scripts/             #   demo.py, bench.py
-    │   └── src/pairwise-numpy/  #   noarch package: pixi-build-python + hatchling
+    │   └── packages/
+    │       └── pairwise-numpy/  #   noarch package: pixi-build-python + hatchling
     ├── 02-cuda-python/
     │   ├── pixi.toml            #   workspace: linux-64 with a CUDA 13 driver
     │   ├── scripts/
-    │   └── src/pairwise-cuda-python/
-    │       └── src/pairwise_cuda_python/
-    │           ├── __init__.py  #   cuda.core: NVRTC compile, buffers, launch
-    │           └── pairwise.cu  #   the kernel, shipped as source
+    │   └── packages/
+    │       └── pairwise-cuda-python/
+    │           └── src/pairwise_cuda_python/
+    │               ├── __init__.py  # cuda.core: NVRTC compile, buffers, launch
+    │               └── pairwise.cu  # the kernel, shipped as source
     └── 03-nanobind-cuda/
         ├── pixi.toml            #   workspace: CUDA platform + build variants
         ├── scripts/
-        └── src/gpu-pairwise/    #   pixi-build-python package
-            ├── pixi.toml        #     package manifest: backend, compilers, host deps
-            ├── pyproject.toml   #     name / version / runtime deps (scikit-build-core)
-            ├── CMakeLists.txt   #     nanobind_add_module(_core ... pairwise.cu)
-            ├── src/pairwise.cu  #     the CUDA kernel + nanobind bindings
-            ├── src/gpu_pairwise/#     the Python package (thin NumPy wrapper)
-            └── tests/           #     pytest checks against scipy.spatial.distance.cdist
+        └── packages/
+            └── gpu-pairwise/    #   pixi-build-python package
+                ├── pixi.toml        # package manifest: backend, compilers, host deps
+                ├── pyproject.toml   # name / version / runtime deps (scikit-build-core)
+                ├── CMakeLists.txt   # nanobind_add_module(_core ... pairwise.cu)
+                ├── src/pairwise.cu  # the CUDA kernel + nanobind bindings
+                ├── src/gpu_pairwise/# the Python package (thin NumPy wrapper)
+                └── tests/           # pytest checks against scipy.spatial.distance.cdist
 ```
 
 The chapters follow the stages in order.

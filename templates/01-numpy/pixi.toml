@@ -13,7 +13,7 @@ preview = ["pixi-build"]
 [dependencies]
 # Our own package as a source dependency: `pixi run` and `pixi install`
 # rebuild it automatically whenever its sources change.
-pairwise-numpy = { path = "src/pairwise-numpy" }
+pairwise-numpy = { path = "packages/pairwise-numpy" }
 numpy = ">=2.3"
 # The reference implementation the benchmark and the tests compare against.
 scipy = ">=1.16"
@@ -34,5 +34,5 @@ cmd = "python scripts/bench.py"
 description = "Time pairwise distances: NumPy broadcasting vs SciPy"
 
 [feature.test.tasks.test]
-cmd = "pytest -v src/pairwise-numpy/tests"
+cmd = "pytest -v packages/pairwise-numpy/tests"
 description = "Check the NumPy implementation against scipy.spatial.distance.cdist"

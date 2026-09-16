@@ -13,7 +13,7 @@ preview = ["pixi-build"]
 [dependencies]
 # Our own package as a source dependency: `pixi run` and `pixi install`
 # rebuild it automatically whenever its sources change.
-pairwise-cuda-python = { path = "src/pairwise-cuda-python" }
+pairwise-cuda-python = { path = "packages/pairwise-cuda-python" }
 numpy = ">=2.3"
 # The reference implementation the benchmark and the tests compare against.
 scipy = ">=1.16"
@@ -34,7 +34,7 @@ cmd = "python scripts/bench.py"
 description = "Time pairwise distances: SciPy vs the NVRTC-compiled kernel"
 
 [feature.test.tasks.test]
-cmd = "pytest -v src/pairwise-cuda-python/tests"
+cmd = "pytest -v packages/pairwise-cuda-python/tests"
 description = "Check the NVRTC-compiled kernel against scipy.spatial.distance.cdist"
 
 # No [workspace.build-variants]: there is no compiler to pin because nothing

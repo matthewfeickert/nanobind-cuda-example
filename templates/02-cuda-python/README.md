@@ -6,7 +6,7 @@ The first GPU port. The hot loop from [stage 1](../01-numpy) becomes a CUDA kern
 pixi run demo     # prints the GPU name and a 5x5 distance matrix
 pixi run bench    # scipy.spatial.distance.cdist vs the NVRTC-compiled kernel
 pixi run test     # pytest against scipy.spatial.distance.cdist
-pixi publish --path src/pairwise-cuda-python --target-channel ./local_channel   # a noarch .conda file in a local channel
+pixi publish --path packages/pairwise-cuda-python --target-channel ./local_channel   # a noarch .conda file in a local channel
 ```
 
 [Stage 3](../03-nanobind-cuda) takes the same kernel and compiles it ahead of time with `nvcc` inside a nanobind extension module.

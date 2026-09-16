@@ -107,19 +107,19 @@ The matrix is symmetric with a zero diagonal, which is the quickest sanity check
 :filename: pixi run test
 ============================= test session starts ==============================
 platform linux -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0 -- /tmp/nanobind-cuda-example/templates/03-nanobind-cuda/.pixi/envs/test/bin/python3.14
-rootdir: /tmp/nanobind-cuda-example/templates/03-nanobind-cuda/src/gpu-pairwise
+rootdir: /tmp/nanobind-cuda-example/templates/03-nanobind-cuda/packages/gpu-pairwise
 configfile: pyproject.toml
 collecting ... collected 9 items
 
-src/gpu-pairwise/tests/test_pairwise.py::test_matches_scipy[1-1-1-float32] PASSED [ 11%]
-src/gpu-pairwise/tests/test_pairwise.py::test_matches_scipy[1-1-1-float64] PASSED [ 22%]
-src/gpu-pairwise/tests/test_pairwise.py::test_matches_scipy[7-5-3-float32] PASSED [ 33%]
-src/gpu-pairwise/tests/test_pairwise.py::test_matches_scipy[7-5-3-float64] PASSED [ 44%]
-src/gpu-pairwise/tests/test_pairwise.py::test_matches_scipy[257-130-16-float32] PASSED [ 55%]
-src/gpu-pairwise/tests/test_pairwise.py::test_matches_scipy[257-130-16-float64] PASSED [ 66%]
-src/gpu-pairwise/tests/test_pairwise.py::test_y_defaults_to_x PASSED     [ 77%]
-src/gpu-pairwise/tests/test_pairwise.py::test_non_contiguous_and_integer_inputs PASSED [ 88%]
-src/gpu-pairwise/tests/test_pairwise.py::test_feature_mismatch_raises PASSED [100%]
+packages/gpu-pairwise/tests/test_pairwise.py::test_matches_scipy[1-1-1-float32] PASSED [ 11%]
+packages/gpu-pairwise/tests/test_pairwise.py::test_matches_scipy[1-1-1-float64] PASSED [ 22%]
+packages/gpu-pairwise/tests/test_pairwise.py::test_matches_scipy[7-5-3-float32] PASSED [ 33%]
+packages/gpu-pairwise/tests/test_pairwise.py::test_matches_scipy[7-5-3-float64] PASSED [ 44%]
+packages/gpu-pairwise/tests/test_pairwise.py::test_matches_scipy[257-130-16-float32] PASSED [ 55%]
+packages/gpu-pairwise/tests/test_pairwise.py::test_matches_scipy[257-130-16-float64] PASSED [ 66%]
+packages/gpu-pairwise/tests/test_pairwise.py::test_y_defaults_to_x PASSED     [ 77%]
+packages/gpu-pairwise/tests/test_pairwise.py::test_non_contiguous_and_integer_inputs PASSED [ 88%]
+packages/gpu-pairwise/tests/test_pairwise.py::test_feature_mismatch_raises PASSED [100%]
 
 ============================== 9 passed in 2.15s ===============================
 ```

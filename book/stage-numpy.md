@@ -5,8 +5,8 @@ It is where most scientific Python projects begin, and it is also the first pack
 
 ## The implementation
 
-```{literalinclude} ../templates/01-numpy/src/pairwise-numpy/src/pairwise_numpy/__init__.py
-:filename: templates/01-numpy/src/pairwise-numpy/src/pairwise_numpy/__init__.py
+```{literalinclude} ../templates/01-numpy/packages/pairwise-numpy/src/pairwise_numpy/__init__.py
+:filename: templates/01-numpy/packages/pairwise-numpy/src/pairwise_numpy/__init__.py
 :language: python
 :linenos:
 ```
@@ -20,14 +20,14 @@ There it feeds a kernel with strict expectations; here it only keeps the behavio
 
 ## The package
 
-```{literalinclude} ../templates/01-numpy/src/pairwise-numpy/pyproject.toml
-:filename: templates/01-numpy/src/pairwise-numpy/pyproject.toml
+```{literalinclude} ../templates/01-numpy/packages/pairwise-numpy/pyproject.toml
+:filename: templates/01-numpy/packages/pairwise-numpy/pyproject.toml
 :language: toml
 :linenos:
 ```
 
-```{literalinclude} ../templates/01-numpy/src/pairwise-numpy/pixi.toml
-:filename: templates/01-numpy/src/pairwise-numpy/pixi.toml
+```{literalinclude} ../templates/01-numpy/packages/pairwise-numpy/pixi.toml
+:filename: templates/01-numpy/packages/pairwise-numpy/pixi.toml
 :language: toml
 :linenos:
 ```

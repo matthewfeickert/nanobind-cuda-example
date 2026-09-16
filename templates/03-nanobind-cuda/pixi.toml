@@ -13,7 +13,7 @@ preview = ["pixi-build"]
 [dependencies]
 # Our own package as a source dependency: `pixi run` and `pixi install`
 # rebuild it automatically whenever its sources change.
-gpu-pairwise = { path = "src/gpu-pairwise" }
+gpu-pairwise = { path = "packages/gpu-pairwise" }
 # Used by the benchmark and the tests as CPU references.
 numpy = ">=2.3"
 scipy = ">=1.16"
@@ -35,7 +35,7 @@ cmd = "python scripts/bench.py"
 description = "Time pairwise distances: NumPy vs SciPy vs scikit-learn vs the CUDA kernel"
 
 [feature.test.tasks.test]
-cmd = "pytest -v src/gpu-pairwise/tests"
+cmd = "pytest -v packages/gpu-pairwise/tests"
 description = "Check the CUDA kernel against scipy.spatial.distance.cdist"
 
 # Pin which CUDA compiler package the build backend resolves

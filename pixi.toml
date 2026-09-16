@@ -13,9 +13,9 @@ preview = ["pixi-build"]
 [dependencies]
 # The three stages as source dependencies: `pixi run` and `pixi install`
 # rebuild them automatically whenever their sources change.
-pairwise-numpy = { path = "templates/01-numpy/src/pairwise-numpy" }
-pairwise-cuda-python = { path = "templates/02-cuda-python/src/pairwise-cuda-python" }
-gpu-pairwise = { path = "templates/03-nanobind-cuda/src/gpu-pairwise" }
+pairwise-numpy = { path = "templates/01-numpy/packages/pairwise-numpy" }
+pairwise-cuda-python = { path = "templates/02-cuda-python/packages/pairwise-cuda-python" }
+gpu-pairwise = { path = "templates/03-nanobind-cuda/packages/gpu-pairwise" }
 # Used by the benchmark and the tests as CPU references.
 numpy = ">=2.3"
 scipy = ">=1.16"
@@ -37,7 +37,7 @@ cmd = "python scripts/bench.py"
 description = "Time all three stages against SciPy and scikit-learn"
 
 [feature.test.tasks.test]
-cmd = "pytest -v --import-mode=importlib --rootdir . templates/01-numpy/src/pairwise-numpy/tests templates/02-cuda-python/src/pairwise-cuda-python/tests templates/03-nanobind-cuda/src/gpu-pairwise/tests"
+cmd = "pytest -v --import-mode=importlib --rootdir . templates/01-numpy/packages/pairwise-numpy/tests templates/02-cuda-python/packages/pairwise-cuda-python/tests templates/03-nanobind-cuda/packages/gpu-pairwise/tests"
 # importlib mode because the three suites share the file name test_pairwise.py.
 description = "Run the test suites of all three stages"
 

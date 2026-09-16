@@ -1,6 +1,6 @@
 # The package
 
-Everything under `src/gpu-pairwise` describes one conda package.
+Everything under `packages/gpu-pairwise` describes one conda package.
 Three files split the job.
 The Pixi package manifest says which build backend to use and what the build needs.
 The `pyproject.toml` carries the Python metadata and runtime dependencies.
@@ -8,8 +8,8 @@ The `CMakeLists.txt` compiles the extension.
 
 ## The package manifest
 
-```{literalinclude} ../templates/03-nanobind-cuda/src/gpu-pairwise/pixi.toml
-:filename: templates/03-nanobind-cuda/src/gpu-pairwise/pixi.toml
+```{literalinclude} ../templates/03-nanobind-cuda/packages/gpu-pairwise/pixi.toml
+:filename: templates/03-nanobind-cuda/packages/gpu-pairwise/pixi.toml
 :language: toml
 :linenos:
 ```
@@ -38,8 +38,8 @@ The [distributing chapter](./distributing.md) shows how they are derived from th
 
 ## The Python project
 
-```{literalinclude} ../templates/03-nanobind-cuda/src/gpu-pairwise/pyproject.toml
-:filename: templates/03-nanobind-cuda/src/gpu-pairwise/pyproject.toml
+```{literalinclude} ../templates/03-nanobind-cuda/packages/gpu-pairwise/pyproject.toml
+:filename: templates/03-nanobind-cuda/packages/gpu-pairwise/pyproject.toml
 :language: toml
 :linenos:
 ```
@@ -54,8 +54,8 @@ scikit-build-core prefers Ninja only when no `CMAKE_GENERATOR` is set, and rattl
 
 ## The CMake configuration
 
-```{literalinclude} ../templates/03-nanobind-cuda/src/gpu-pairwise/CMakeLists.txt
-:filename: templates/03-nanobind-cuda/src/gpu-pairwise/CMakeLists.txt
+```{literalinclude} ../templates/03-nanobind-cuda/packages/gpu-pairwise/CMakeLists.txt
+:filename: templates/03-nanobind-cuda/packages/gpu-pairwise/CMakeLists.txt
 :language: cmake
 :linenos:
 ```

@@ -6,7 +6,7 @@ The starting point. `pairwise_numpy.pairwise_distances` computes the full Euclid
 pixi run demo     # prints a 5x5 distance matrix
 pixi run bench    # NumPy broadcasting vs scipy.spatial.distance.cdist
 pixi run test     # pytest against scipy.spatial.distance.cdist
-pixi publish --path src/pairwise-numpy --target-channel ./local_channel   # a noarch .conda file in a local channel
+pixi publish --path packages/pairwise-numpy --target-channel ./local_channel   # a noarch .conda file in a local channel
 ```
 
 The same function is reimplemented on the GPU in [stage 2](../02-cuda-python) and [stage 3](../03-nanobind-cuda) with an identical signature, so the three packages are drop-in replacements for each other.

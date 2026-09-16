@@ -12,7 +12,7 @@ The name `local_channel` follows the direction of [pixi issue #6600](https://git
 
 ```{code} console
 :filename: shell
-$ pixi publish --path templates/03-nanobind-cuda/src/gpu-pairwise --target-channel ./local_channel
+$ pixi publish --path templates/03-nanobind-cuda/packages/gpu-pairwise --target-channel ./local_channel
 ```
 
 The output is the same build the workspace ran on first install, followed by the packaging and indexing steps.

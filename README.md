@@ -23,24 +23,27 @@ nanobind-cuda-example/
     ├── 01-numpy/
     │   ├── pixi.toml            #   workspace: plain linux-64, no GPU
     │   ├── scripts/             #   demo.py, bench.py
-    │   └── src/pairwise-numpy/  #   noarch package: pixi-build-python + hatchling
+    │   └── packages/
+    │       └── pairwise-numpy/  #   noarch package: pixi-build-python + hatchling
     ├── 02-cuda-python/
     │   ├── pixi.toml            #   workspace: linux-64 with a CUDA 13 driver
     │   ├── scripts/
-    │   └── src/pairwise-cuda-python/
-    │       └── src/pairwise_cuda_python/
-    │           ├── __init__.py  #   cuda.core: NVRTC compile, buffers, launch
-    │           └── pairwise.cu  #   the kernel, shipped as source
+    │   └── packages/
+    │       └── pairwise-cuda-python/
+    │           └── src/pairwise_cuda_python/
+    │               ├── __init__.py  # cuda.core: NVRTC compile, buffers, launch
+    │               └── pairwise.cu  # the kernel, shipped as source
     └── 03-nanobind-cuda/
         ├── pixi.toml            #   workspace: CUDA platform + build variants
         ├── scripts/
-        └── src/gpu-pairwise/    #   pixi-build-python package
-            ├── pixi.toml        #     package manifest: backend, compilers, host deps
-            ├── pyproject.toml   #     name / version / runtime deps (scikit-build-core)
-            ├── CMakeLists.txt   #     nanobind_add_module(_core ... pairwise.cu)
-            ├── src/pairwise.cu  #     the CUDA kernel + nanobind bindings
-            ├── src/gpu_pairwise/#     the Python package (thin NumPy wrapper)
-            └── tests/           #     pytest checks against scipy.spatial.distance.cdist
+        └── packages/
+            └── gpu-pairwise/    #   pixi-build-python package
+                ├── pixi.toml        # package manifest: backend, compilers, host deps
+                ├── pyproject.toml   # name / version / runtime deps (scikit-build-core)
+                ├── CMakeLists.txt   # nanobind_add_module(_core ... pairwise.cu)
+                ├── src/pairwise.cu  # the CUDA kernel + nanobind bindings
+                ├── src/gpu_pairwise/# the Python package (thin NumPy wrapper)
+                └── tests/           # pytest checks against scipy.spatial.distance.cdist
 ```
 
 ## Run it
@@ -80,10 +83,10 @@ Stages 2 and 3 run the same kernel and stay within about 20% of each other, but 
 ## Build a distributable package
 
 ```console
-pixi publish --path templates/03-nanobind-cuda/src/gpu-pairwise --target-channel ./local_channel
+pixi publish --path templates/03-nanobind-cuda/packages/gpu-pairwise --target-channel ./local_channel
 ```
 
-builds the package and writes it into `local_channel/linux-64/gpu-pairwise-0.1.0-<hash>_0.conda` alongside a `repodata.json` index, so `local_channel/` is a complete conda channel that another workspace can list next to conda-forge. Publishing to a local filesystem channel is how Pixi builds a package for inspection; the older `pixi build` command is deprecated in favour of it. The same command with `templates/02-cuda-python/src/pairwise-cuda-python` produces the stage 2 package, whose `depends` list contains only what its manifests wrote down. Its recorded runtime dependencies are the interesting part: the single `cuda-cudart-dev` host dependency became `cuda-cudart` and `cuda-version` pins through conda-forge run-exports, and the Python build became a `python_abi` pin.
+builds the package and writes it into `local_channel/linux-64/gpu-pairwise-0.1.0-<hash>_0.conda` alongside a `repodata.json` index, so `local_channel/` is a complete conda channel that another workspace can list next to conda-forge. Publishing to a local filesystem channel is how Pixi builds a package for inspection; the older `pixi build` command is deprecated in favour of it. The same command with `templates/02-cuda-python/packages/pairwise-cuda-python` produces the stage 2 package, whose `depends` list contains only what its manifests wrote down. Its recorded runtime dependencies are the interesting part: the single `cuda-cudart-dev` host dependency became `cuda-cudart` and `cuda-version` pins through conda-forge run-exports, and the Python build became a `python_abi` pin.
 
 ```json
 "depends": [
@@ -102,7 +105,7 @@ Pointing `--target-channel` at a prefix.dev channel instead publishes the same p
 
 ## How the pieces fit
 
-- `templates/03-nanobind-cuda/src/gpu-pairwise/pixi.toml` declares the `pixi-build-python` backend with `config.compilers = ["cxx", "cuda"]`. The backend runs `uv pip install --no-build-isolation`, so scikit-build-core and nanobind are listed as host dependencies rather than fetched from PyPI.
+- `templates/03-nanobind-cuda/packages/gpu-pairwise/pixi.toml` declares the `pixi-build-python` backend with `config.compilers = ["cxx", "cuda"]`. The backend runs `uv pip install --no-build-isolation`, so scikit-build-core and nanobind are listed as host dependencies rather than fetched from PyPI.
 - The stage 3 workspace's `[workspace.build-variants]` table pins which conda-forge package `cuda` resolves to (`cuda-nvcc` 13.1), so the build is reproducible.
 - The rich platform entry `{ name = "linux-64-cuda", platform = "linux-64", cuda = "13" }` tells the solver that this machine has a CUDA 13 driver, which is what lets it pick GPU-enabled builds.
 - `CMakeLists.txt` uses `nanobind_add_module` on a `.cu` source. CMake's CUDA language support drives `nvcc`; nanobind handles the Python side.

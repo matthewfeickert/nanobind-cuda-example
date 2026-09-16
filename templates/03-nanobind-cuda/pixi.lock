@@ -54,7 +54,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/python_abi-3.14-9_cp314.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/threadpoolctl-3.6.0-pyhecae5ae_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tzdata-2026c-h151e31d_0.conda
-      - conda_source: gpu-pairwise[c405bd1e] @ src/gpu-pairwise
+      - conda_source: gpu-pairwise[c0dd7bbd] @ packages/gpu-pairwise
   test:
     channels:
     - url: https://conda.anaconda.org/conda-forge/
@@ -109,7 +109,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/tomli-2.4.1-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/typing_extensions-4.16.0-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tzdata-2026c-h151e31d_0.conda
-      - conda_source: gpu-pairwise[c405bd1e] @ src/gpu-pairwise
+      - conda_source: gpu-pairwise[c0dd7bbd] @ packages/gpu-pairwise
 packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-64/_openmp_mutex-4.5-20_gnu.conda
   build_number: 20
@@ -1023,9 +1023,9 @@ packages:
     - tk >=8.6.13,<8.7.0a0
   size: 3566806
   timestamp: 1787272857910
-- conda: https://conda.anaconda.org/conda-forge/linux-64/uv-0.12.13-h841d291_0.conda
-  sha256: 02b3ac1f7a27082370a6ec49299c9c1efe245d018ff872da40933fa2279940e9
-  md5: 63a7873a0d33470c9f24272783e77982
+- conda: https://conda.anaconda.org/conda-forge/linux-64/uv-0.12.15-h841d291_0.conda
+  sha256: 1af51a76d5f2317a9b3bcd04105d01b5c6bc4f9e8703406649cf5d9a45931466
+  md5: e07a8b84fd0c1b134cbbdd3deca971ac
   depends:
   - libgcc >=15
   - __glibc >=2.17,<3.0.a0
@@ -1036,8 +1036,8 @@ packages:
   - __glibc >=2.17
   license: Apache-2.0 OR MIT
   run_exports: {}
-  size: 17367049
-  timestamp: 1789205540246
+  size: 17314582
+  timestamp: 1789567857887
 - conda: https://conda.anaconda.org/conda-forge/linux-64/zstd-1.5.7-hb78ec9c_7.conda
   sha256: 47d682b9f6d6ec9eb1a6e6c3e75ea6273e899e78fb7fc59f81d39745009fbc60
   md5: aa459086047c0e5e27023ab19f8cb86a
@@ -1496,7 +1496,7 @@ packages:
   run_exports: {}
   size: 24190
   timestamp: 1779159948016
-- conda_source: gpu-pairwise[c405bd1e] @ src/gpu-pairwise
+- conda_source: gpu-pairwise[c0dd7bbd] @ packages/gpu-pairwise
   variants:
     c_stdlib: sysroot
     c_stdlib_version: '2.28'
@@ -1597,7 +1597,7 @@ packages:
   - conda: https://conda.anaconda.org/conda-forge/linux-64/python-3.14.7-hcd007b5_106_cp314.conda
   - conda: https://conda.anaconda.org/conda-forge/linux-64/readline-8.3-hd6e31c0_1.conda
   - conda: https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.13-noxft_h1df4ec4_4.conda
-  - conda: https://conda.anaconda.org/conda-forge/linux-64/uv-0.12.13-h841d291_0.conda
+  - conda: https://conda.anaconda.org/conda-forge/linux-64/uv-0.12.15-h841d291_0.conda
   - conda: https://conda.anaconda.org/conda-forge/linux-64/zstd-1.5.7-hb78ec9c_7.conda
   - conda: https://conda.anaconda.org/conda-forge/noarch/ca-certificates-2026.7.22-hbd8a1cb_0.conda
   - conda: https://conda.anaconda.org/conda-forge/noarch/cuda-cccl_linux-64-13.3.4.2.1-ha770c72_2.conda

@@ -6,8 +6,8 @@ The tool that makes this possible is [cuda-python](https://github.com/NVIDIA/cud
 
 ## The kernel
 
-```{literalinclude} ../templates/02-cuda-python/src/pairwise-cuda-python/src/pairwise_cuda_python/pairwise.cu
-:filename: templates/02-cuda-python/src/pairwise-cuda-python/src/pairwise_cuda_python/pairwise.cu
+```{literalinclude} ../templates/02-cuda-python/packages/pairwise-cuda-python/src/pairwise_cuda_python/pairwise.cu
+:filename: templates/02-cuda-python/packages/pairwise-cuda-python/src/pairwise_cuda_python/pairwise.cu
 :language: cpp
 :linenos:
 ```
@@ -18,8 +18,8 @@ It is byte for byte the kernel that stage 3 will compile with `nvcc`; stage 3 ad
 
 ## Driving it from Python
 
-```{literalinclude} ../templates/02-cuda-python/src/pairwise-cuda-python/src/pairwise_cuda_python/__init__.py
-:filename: templates/02-cuda-python/src/pairwise-cuda-python/src/pairwise_cuda_python/__init__.py
+```{literalinclude} ../templates/02-cuda-python/packages/pairwise-cuda-python/src/pairwise_cuda_python/__init__.py
+:filename: templates/02-cuda-python/packages/pairwise-cuda-python/src/pairwise_cuda_python/__init__.py
 :language: python
 :linenos:
 ```
@@ -34,14 +34,14 @@ The launch uses the same `(32, 8)` thread block as stage 3, the result comes bac
 
 ## The package
 
-```{literalinclude} ../templates/02-cuda-python/src/pairwise-cuda-python/pyproject.toml
-:filename: templates/02-cuda-python/src/pairwise-cuda-python/pyproject.toml
+```{literalinclude} ../templates/02-cuda-python/packages/pairwise-cuda-python/pyproject.toml
+:filename: templates/02-cuda-python/packages/pairwise-cuda-python/pyproject.toml
 :language: toml
 :linenos:
 ```
 
-```{literalinclude} ../templates/02-cuda-python/src/pairwise-cuda-python/pixi.toml
-:filename: templates/02-cuda-python/src/pairwise-cuda-python/pixi.toml
+```{literalinclude} ../templates/02-cuda-python/packages/pairwise-cuda-python/pixi.toml
+:filename: templates/02-cuda-python/packages/pairwise-cuda-python/pixi.toml
 :language: toml
 :linenos:
 ```
@@ -97,7 +97,7 @@ The tests pass against `cdist` at the same tolerances as the other stages.
 
 ```{code} console
 :filename: shell
-$ pixi publish --path src/pairwise-cuda-python --target-channel ./local_channel
+$ pixi publish --path packages/pairwise-cuda-python --target-channel ./local_channel
 ```
 
 ```{code} text
