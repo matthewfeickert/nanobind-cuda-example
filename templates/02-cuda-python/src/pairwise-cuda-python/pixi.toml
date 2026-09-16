@@ -1,0 +1,23 @@
+# ── The pairwise-cuda-python package: what `pixi build` turns into a .conda file
+# A *package* manifest only (no `[workspace]`). Name, version and runtime
+# dependencies are read from the adjacent pyproject.toml. The workspace that
+# consumes it lives in ../../pixi.toml.
+[package.build]
+backend = { name = "pixi-build-python", version = "0.*" }
+# Still nothing to compile at build time: the kernel is compiled by NVRTC when
+# the package is first used. So no `config.compilers`, and the package is
+# `noarch: python` exactly like stage 1.
+# Map `[project.dependencies]` in pyproject.toml onto conda-forge packages.
+config.ignore-pypi-mapping = false
+
+[package.host-dependencies]
+# The backend runs `uv pip install --no-build-isolation`, so the PEP 517
+# build backend named in pyproject.toml has to be present already.
+hatchling = "*"
+
+[package.run-dependencies]
+# The pure Python package has no linked libraries, so nothing tells conda
+# which CUDA generation it needs. Stage 3 gets this for free from the
+# run-export of its `cuda-cudart-dev` host dependency; here it is written by
+# hand so the solver picks the CUDA 13 builds of cuda-core and cuda-bindings.
+cuda-version = "13.*"

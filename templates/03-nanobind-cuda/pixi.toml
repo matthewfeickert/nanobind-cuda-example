@@ -1,0 +1,46 @@
+# ── Stage 3: the nanobind + CUDA kernel workspace ──────────────────────────
+# One workspace that builds one source package from ./src:
+#   * gpu-pairwise — a Python extension module (nanobind) wrapping a CUDA
+#     kernel, built through the pixi-build-python backend + scikit-build-core.
+[workspace]
+name = "nanobind-cuda"
+channels = ["https://prefix.dev/conda-forge"]
+# Declare that this platform provides a CUDA driver (the `__cuda` virtual
+# package). This is what lets the solver pick GPU-enabled builds.
+platforms = [{ platform = "linux-64", cuda = "13" }]
+preview = ["pixi-build"]
+
+[dependencies]
+# Our own package as a source dependency: `pixi run` and `pixi install`
+# rebuild it automatically whenever its sources change.
+gpu-pairwise = { path = "src/gpu-pairwise" }
+# Used by the benchmark and the tests as CPU references.
+numpy = ">=2.3"
+scipy = ">=1.16"
+scikit-learn = ">=1.7"
+
+[feature.test.dependencies]
+pytest = ">=8"
+
+[environments]
+test = ["test"]
+
+# ── Tasks ───────────────────────────────────────────────────────────────────
+[tasks.demo]
+cmd = "python scripts/demo.py"
+description = "Smallest possible end-to-end use of the extension"
+
+[tasks.bench]
+cmd = "python scripts/bench.py"
+description = "Time pairwise distances: NumPy vs SciPy vs scikit-learn vs the CUDA kernel"
+
+[feature.test.tasks.test]
+cmd = "pytest -v src/gpu-pairwise/tests"
+description = "Check the CUDA kernel against scipy.spatial.distance.cdist"
+
+# Pin which CUDA compiler package the build backend resolves
+# `compilers = ["cuda"]` to. On conda-forge, CUDA 12+ compilers live in
+# the `cuda-nvcc` packages.
+[workspace.build-variants]
+cuda_compiler = ["cuda-nvcc"]
+cuda_compiler_version = ["13.1"]

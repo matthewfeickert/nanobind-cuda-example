@@ -1,0 +1,41 @@
+# ── Stage 2: the cuda-python workspace ─────────────────────────────────────
+# One workspace that builds one source package from ./src:
+#   * pairwise-cuda-python — a pure Python package whose CUDA kernel is
+#     compiled at runtime by NVRTC through cuda.core.
+[workspace]
+name = "cuda-python"
+channels = ["https://prefix.dev/conda-forge"]
+# Declare that this platform provides a CUDA driver (the `__cuda` virtual
+# package). Without it the solver cannot satisfy cuda-core's dependencies.
+platforms = [{ platform = "linux-64", cuda = "13" }]
+preview = ["pixi-build"]
+
+[dependencies]
+# Our own package as a source dependency: `pixi run` and `pixi install`
+# rebuild it automatically whenever its sources change.
+pairwise-cuda-python = { path = "src/pairwise-cuda-python" }
+numpy = ">=2.3"
+# The reference implementation the benchmark and the tests compare against.
+scipy = ">=1.16"
+
+[feature.test.dependencies]
+pytest = ">=8"
+
+[environments]
+test = ["test"]
+
+# ── Tasks ───────────────────────────────────────────────────────────────────
+[tasks.demo]
+cmd = "python scripts/demo.py"
+description = "Smallest possible end-to-end use of the package"
+
+[tasks.bench]
+cmd = "python scripts/bench.py"
+description = "Time pairwise distances: SciPy vs the NVRTC-compiled kernel"
+
+[feature.test.tasks.test]
+cmd = "pytest -v src/pairwise-cuda-python/tests"
+description = "Check the NVRTC-compiled kernel against scipy.spatial.distance.cdist"
+
+# No [workspace.build-variants]: there is no compiler to pin because nothing
+# is compiled when the package is built.

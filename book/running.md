@@ -1,7 +1,7 @@
 # Running it
 
-This chapter shows what happens when the workspace is used.
-All outputs were captured on a laptop with an NVIDIA GeForce RTX 4060 Laptop GPU, driver 595.84, and Pixi 0.80.0.
+This chapter shows what happens when the stage 3 workspace in `templates/03-nanobind-cuda` is used.
+All outputs were captured on a laptop with an NVIDIA GeForce RTX 4060 Laptop GPU, driver 595.91, and Pixi 0.81.0.
 Lines that only repeat information have been trimmed and the trimming is marked.
 
 ## The first `pixi install`
@@ -84,8 +84,8 @@ On this laptop the compile for all major GPU architectures took about 25 seconds
 
 ## `pixi run demo`
 
-```{literalinclude} ../scripts/demo.py
-:filename: scripts/demo.py
+```{literalinclude} ../templates/03-nanobind-cuda/scripts/demo.py
+:filename: templates/03-nanobind-cuda/scripts/demo.py
 :language: python
 ```
 
@@ -106,8 +106,8 @@ The matrix is symmetric with a zero diagonal, which is the quickest sanity check
 ```{code} text
 :filename: pixi run test
 ============================= test session starts ==============================
-platform linux -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0 -- /tmp/nanobind-cuda-example/.pixi/envs/test/bin/python3.14
-rootdir: /tmp/nanobind-cuda-example/src/gpu-pairwise
+platform linux -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0 -- /tmp/nanobind-cuda-example/templates/03-nanobind-cuda/.pixi/envs/test/bin/python3.14
+rootdir: /tmp/nanobind-cuda-example/templates/03-nanobind-cuda/src/gpu-pairwise
 configfile: pyproject.toml
 collecting ... collected 9 items
 
@@ -121,7 +121,7 @@ src/gpu-pairwise/tests/test_pairwise.py::test_y_defaults_to_x PASSED     [ 77%]
 src/gpu-pairwise/tests/test_pairwise.py::test_non_contiguous_and_integer_inputs PASSED [ 88%]
 src/gpu-pairwise/tests/test_pairwise.py::test_feature_mismatch_raises PASSED [100%]
 
-============================== 9 passed in 0.53s ===============================
+============================== 9 passed in 2.15s ===============================
 ```
 
 The tests run in the separate `test` environment, which is why the interpreter path contains `.pixi/envs/test`.
@@ -129,25 +129,25 @@ Pixi built the package once and installed the same artifact into both environmen
 
 ## `pixi run bench`
 
-```{literalinclude} ../scripts/bench.py
-:filename: scripts/bench.py
+```{literalinclude} ../templates/03-nanobind-cuda/scripts/bench.py
+:filename: templates/03-nanobind-cuda/scripts/bench.py
 :language: python
 ```
 
 Each row times the full `n × n` distance matrix for `n` points in `d` dimensions, held as a float32 array of shape `(n, d)`, so the work grows as `n² · d`.
 The CUDA column includes the host to device and device to host copies.
-The NumPy broadcasting reference is skipped for the larger `n` because its `(n, n, d)` intermediate would need tens of GB of memory.
+The NumPy column here is the unchunked broadcast from the script above, not the stage 1 package, and it is skipped for the larger `n` because its `(n, n, d)` intermediate would need tens of GB of memory.
 
 ```{code} text
 :filename: pixi run bench
 GPU: NVIDIA GeForce RTX 4060 Laptop GPU
 
       n    d |     numpy     scipy   sklearn      cuda | speedup vs scipy
-   1000   16 |    0.049s    0.006s    0.013s    0.001s |    6.2x
-   4000   16 |    3.256s    0.118s    0.157s    0.042s |    2.8x
-   8000   16 |   skipped    1.609s    1.181s    0.161s |   10.0x
-   8000  128 |   skipped    4.442s    0.674s    0.321s |   13.8x
+   1000   16 |    0.039s    0.004s    0.009s    0.001s |    4.2x
+   4000   16 |    0.619s    0.081s    0.063s    0.031s |    2.7x
+   8000   16 |   skipped    0.331s    0.270s    0.115s |    2.9x
+   8000  128 |   skipped    2.380s    0.310s    0.276s |    8.6x
 ```
 
-A naive kernel on a laptop GPU beats SciPy's compiled C loop by an order of magnitude at the larger sizes, and it does so with the memory traffic included.
+A naive kernel on a laptop GPU beats SciPy's compiled C loop by several times at every size and by almost an order of magnitude at the largest, and it does so with the memory traffic included.
 scikit-learn is closer because it reformulates the problem as a matrix product and hands it to a multithreaded BLAS, which is the same trick that would make the CUDA version far faster still.

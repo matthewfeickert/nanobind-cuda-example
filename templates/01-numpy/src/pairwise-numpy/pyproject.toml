@@ -1,0 +1,17 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pairwise-numpy"
+version = "0.1.0"
+description = "Pairwise Euclidean distances on the CPU with NumPy: the baseline the GPU stages are measured against."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+    "numpy>=2.3,<3",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pairwise_numpy"]
