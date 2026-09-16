@@ -7,7 +7,7 @@ import numpy as np
 import pairwise_cuda_python
 
 x = np.random.default_rng(0).normal(size=(1000, 8))
-D = pairwise_cuda_python.pairwise_distances(x)   # (1000, 1000) float32
+D = pairwise_cuda_python.pairwise_distances(x)  # (1000, 1000) float32
 ```
 
 The conda package is built by the `pixi-build-python` backend using the manifest in `pixi.toml`; the workspace that consumes it lives two levels up.

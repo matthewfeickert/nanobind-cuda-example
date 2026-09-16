@@ -1,8 +1,7 @@
 """The smallest end-to-end use of the packaged extension."""
 
-import numpy as np
-
 import gpu_pairwise
+import numpy as np
 
 rng = np.random.default_rng(0)
 x = rng.normal(size=(5, 3))

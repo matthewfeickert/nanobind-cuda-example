@@ -7,9 +7,8 @@ one-off NVRTC compilation.
 import time
 
 import numpy as np
-from scipy.spatial.distance import cdist
-
 import pairwise_cuda_python
+from scipy.spatial.distance import cdist
 
 
 def timeit(fn, *args, repeat=3):

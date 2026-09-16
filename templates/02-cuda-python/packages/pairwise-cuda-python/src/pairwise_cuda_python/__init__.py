@@ -21,7 +21,9 @@ from cuda.core import (
 
 __all__ = ["device_name", "pairwise_distances"]
 
-_KERNEL_SOURCE = importlib.resources.files(__package__).joinpath("pairwise.cu").read_text()
+_KERNEL_SOURCE = (
+    importlib.resources.files(__package__).joinpath("pairwise.cu").read_text()
+)
 # Same launch geometry as the nanobind stage: block.x walks columns of the
 # output, block.y walks rows.
 _BLOCK = (32, 8)
@@ -38,7 +40,10 @@ def _kernel(dtype):
         # stage compiles for every major architecture ahead of time instead.
         options = ProgramOptions(std="c++17", arch=f"sm_{dev.arch}")
         program = Program(_KERNEL_SOURCE, code_type="c++", options=options)
-        names = {np.float32: "pairwise_kernel<float>", np.float64: "pairwise_kernel<double>"}
+        names = {
+            np.float32: "pairwise_kernel<float>",
+            np.float64: "pairwise_kernel<double>",
+        }
         module = program.compile("cubin", name_expressions=tuple(names.values()))
         for key, name in names.items():
             _kernels[np.dtype(key)] = module.get_kernel(name)
@@ -96,7 +101,9 @@ def pairwise_distances(x, y=None):
 
         grid = (-(-m // _BLOCK[0]), -(-n // _BLOCK[1]))
         config = LaunchConfig(grid=grid, block=_BLOCK)
-        launch(stream, config, kernel, dx, dy, dout, np.int32(n), np.int32(m), np.int32(d))
+        launch(
+            stream, config, kernel, dx, dy, dout, np.int32(n), np.int32(m), np.int32(d)
+        )
 
         host_out = pinned.allocate(out_nbytes)
         buffers.append(host_out)

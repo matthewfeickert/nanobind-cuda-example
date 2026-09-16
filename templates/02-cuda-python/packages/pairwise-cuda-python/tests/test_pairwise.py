@@ -1,8 +1,7 @@
 import numpy as np
+import pairwise_cuda_python
 import pytest
 from scipy.spatial.distance import cdist
-
-import pairwise_cuda_python
 
 
 @pytest.fixture
@@ -39,4 +38,6 @@ def test_non_contiguous_and_integer_inputs(rng):
 
 def test_feature_mismatch_raises(rng):
     with pytest.raises(ValueError, match="same number of columns"):
-        pairwise_cuda_python.pairwise_distances(rng.normal(size=(3, 2)), rng.normal(size=(3, 5)))
+        pairwise_cuda_python.pairwise_distances(
+            rng.normal(size=(3, 2)), rng.normal(size=(3, 5))
+        )

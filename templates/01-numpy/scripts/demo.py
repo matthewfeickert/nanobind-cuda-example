@@ -1,7 +1,6 @@
 """The smallest end-to-end use of the package."""
 
 import numpy as np
-
 import pairwise_numpy
 
 rng = np.random.default_rng(0)

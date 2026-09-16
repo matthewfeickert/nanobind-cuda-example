@@ -12,13 +12,12 @@ it would take minutes and its trend is already clear.
 
 import time
 
-import numpy as np
-from scipy.spatial.distance import cdist
-from sklearn.metrics import pairwise_distances as sk_pairwise
-
 import gpu_pairwise
+import numpy as np
 import pairwise_cuda_python
 import pairwise_numpy
+from scipy.spatial.distance import cdist
+from sklearn.metrics import pairwise_distances as sk_pairwise
 
 
 def timeit(fn, *args, repeat=3):
@@ -36,7 +35,15 @@ def main():
     print(f"GPU: {gpu_pairwise.device_name()}\n")
     header = f"{'n':>7} {'d':>4} | {'numpy':>9} {'scipy':>9} {'sklearn':>9} | {'cuda-python':>11} {'nanobind':>9} | nanobind vs scipy"
     print(header)
-    for n, d in [(1_000, 16), (4_000, 16), (8_000, 16), (8_000, 128), (16_000, 16), (16_000, 128), (32_000, 16)]:
+    for n, d in [
+        (1_000, 16),
+        (4_000, 16),
+        (8_000, 16),
+        (8_000, 128),
+        (16_000, 16),
+        (16_000, 128),
+        (32_000, 16),
+    ]:
         x = rng.normal(size=(n, d)).astype(np.float32)
         t_np = timeit(pairwise_numpy.pairwise_distances, x) if n <= 8_000 else None
         t_sp = timeit(cdist, x, x)
