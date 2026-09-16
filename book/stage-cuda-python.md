@@ -1,4 +1,4 @@
-# Stage 2: the kernel in Python, compiled at runtime
+# Stage 2: cuda-python, the kernel compiled at runtime
 
 The first GPU port keeps the package pure Python.
 The hot loop becomes a CUDA kernel, but the kernel ships as source text and is compiled on the user's machine the first time the function is called.
@@ -179,14 +179,5 @@ The full `info/index.json` it summarises is short enough to read whole.
 The package is eleven kilobytes, it is `noarch`, and the `.cu` file is sitting inside it as text.
 Every entry in `depends` was written by a human in one of the two manifests, and the `RE of` column that fills the equivalent table for stage 3 is empty here apart from the Python pin.
 
-## Why go further
-
-Stage 2 is a perfectly reasonable place to stop for a project that is used by its own authors.
-Three costs push a package meant for others towards stage 3.
-
-The user needs NVRTC at runtime, which `cuda-core` pulls in, and a first call that takes a fraction of a second to compile.
-Errors in the kernel surface on the user's machine as a runtime exception rather than on the author's machine as a build failure.
-The package cannot say anything about the CUDA runtime it needs beyond what its author remembered to write down.
-
-Stage 3 moves the compile to package build time, where `nvcc` targets every major GPU architecture at once and where conda-forge's run-exports write the runtime constraints into the package metadata automatically.
-That is the rest of this book.
+This is a complete, working GPU package.
+Whether to go on to [stage 3](./stage-nanobind.md) depends on who it is for, and that chapter opens with the trade-off.

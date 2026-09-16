@@ -1,4 +1,4 @@
-# Stage 1: NumPy only
+# Stage 1: NumPy, the CPU baseline
 
 The starting point is a pure Python package with NumPy as its only dependency.
 It is where most scientific Python projects begin, and it is also the first packaging story, because a package that ships nothing but `.py` files is the simplest thing Pixi Build can produce.

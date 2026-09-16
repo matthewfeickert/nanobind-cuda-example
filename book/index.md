@@ -11,7 +11,7 @@ It is built three times, in three directories under `templates/`, each one a sta
 
 1. [Stage 1](./stage-numpy.md) is NumPy only: a pure Python package and the CPU baseline.
 2. [Stage 2](./stage-cuda-python.md) ships the CUDA kernel as source and compiles it at first use with NVRTC through [cuda-python](https://github.com/NVIDIA/cuda-python). Still a pure Python package.
-3. Stage 3, `gpu-pairwise`, compiles the same kernel ahead of time with `nvcc` and binds it with nanobind. This is the destination and it gets the most chapters.
+3. [Stage 3](./stage-nanobind.md), `gpu-pairwise`, compiles the same kernel ahead of time with `nvcc` and binds it with nanobind. It is the alternative to stage 2 for a package shipped to other people, and it gets the most chapters because it has the most parts.
 
 The kernel is deliberately naive, with one CUDA thread per output element, because the packaging is the point of the example, not the kernel.
 
@@ -71,9 +71,9 @@ nanobind-cuda-example/
 ```
 
 The chapters follow the stages in order.
-[The three stages](./stages.md) introduces the shared API and compares all three in one benchmark.
+[Three ways to build the same package](./stages.md) introduces the shared API, compares all three in one benchmark, and says when each is worth choosing.
 [Stage 1](./stage-numpy.md) and [stage 2](./stage-cuda-python.md) each get one chapter.
-Stage 3 is then walked from the outside in.
+[Stage 3](./stage-nanobind.md) opens with the trade-off against stage 2 and is then walked from the outside in.
 [The workspace](./workspace.md) is what you `pixi run`.
 [The package](./package.md) is what Pixi turns into a `.conda` file.
 [The kernel and its bindings](./kernel.md) are the code being packaged.

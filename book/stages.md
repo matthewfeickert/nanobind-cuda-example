@@ -1,4 +1,4 @@
-# The three stages
+# Three ways to build the same package
 
 Speeding up a Python package with a GPU rarely happens in one jump.
 The `templates/` directory holds three versions of the same package, one per stage, so the differences in code and in packaging can be read side by side.
@@ -20,11 +20,14 @@ pairwise_distances(x, y=None)
 `x` has shape `(n, d)` and `y` shape `(m, d)`, `y` defaults to `x`, the result has shape `(n, m)`, and inputs are promoted to float32 unless either is already float64.
 Because the signature and the dtype rules match, the three packages are drop-in replacements for each other, the same test file checks all of them against `scipy.spatial.distance.cdist`, and one benchmark can time them in a single process.
 
-| Stage | Package | Where the work happens | When the kernel is compiled | Package type |
-|---|---|---|---|---|
-| 1 | `pairwise-numpy` | CPU, NumPy broadcasting | never | `noarch: python` |
-| 2 | `pairwise-cuda-python` | GPU, kernel launched by `cuda.core` | at first call, by NVRTC, for the GPU present | `noarch: python` |
-| 3 | `gpu-pairwise` | GPU, kernel launched from C++ | at package build, by `nvcc`, for all major architectures | `linux-64`, CPython ABI specific |
+| Stage | Package | Where the work happens | When the kernel is compiled | Package type | Worth it when |
+|---|---|---|---|---|---|
+| 1 | `pairwise-numpy` | CPU, NumPy broadcasting | never | `noarch: python` | the data is small or no GPU is available |
+| 2 | `pairwise-cuda-python` | GPU, kernel launched by `cuda.core` | at first call, by NVRTC, for the GPU present | `noarch: python` | the package is used by its authors on machines they control |
+| 3 | `gpu-pairwise` | GPU, kernel launched from C++ | at package build, by `nvcc`, for all major architectures | `linux-64`, CPython ABI specific | the package is shipped to others and must fail at build time, not at first call |
+
+Stages 2 and 3 are alternatives, not steps that every project takes in turn.
+The [stage 3 chapter](./stage-nanobind.md) opens with the trade-off between them.
 
 ## The umbrella workspace
 

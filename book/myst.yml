@@ -30,11 +30,13 @@ project:
     - file: stages.md
     - file: stage-numpy.md
     - file: stage-cuda-python.md
-    - file: workspace.md
-    - file: package.md
-    - file: kernel.md
-    - file: running.md
-    - file: distributing.md
+    - file: stage-nanobind.md
+      children:
+        - file: workspace.md
+        - file: package.md
+        - file: kernel.md
+        - file: running.md
+        - file: distributing.md
     - file: next-steps.md
 
 site:
