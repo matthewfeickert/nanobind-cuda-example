@@ -49,6 +49,8 @@ Nothing in it mentions Pixi or conda, and `pip install .` inside an environment 
 That is the design goal: Pixi Build packages the project you already have rather than asking you to restructure it.
 
 The `[tool.scikit-build]` table stops scikit-build-core from fetching its own CMake and Ninja wheels from PyPI, because the conda build environment already provides both.
+It also passes `-GNinja` to CMake explicitly.
+scikit-build-core prefers Ninja only when no `CMAKE_GENERATOR` is set, and rattler-build's build environment sets it to Unix Makefiles, so without this line the extension would be compiled with Make even though Ninja is sitting in the build environment; see [rattler-build issue 2487](https://github.com/prefix-dev/rattler-build/issues/2487) and the [scikit-build Pixi guide](https://scikit-build.org/SIMPLE-Py/pixi-build/).
 
 ## The CMake configuration
 
