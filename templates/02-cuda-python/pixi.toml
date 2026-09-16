@@ -7,7 +7,7 @@ name = "cuda-python"
 channels = ["conda-forge"]
 # Declare that this platform provides a CUDA driver (the `__cuda` virtual
 # package). Without it the solver cannot satisfy cuda-core's dependencies.
-platforms = [{ platform = "linux-64", cuda = "13" }]
+platforms = [{ name = "linux-64-cuda", platform = "linux-64", cuda = "13" }]
 preview = ["pixi-build"]
 
 [dependencies]

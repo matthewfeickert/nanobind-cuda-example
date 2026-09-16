@@ -115,7 +115,7 @@ The workspace still has to declare the CUDA driver, because the package's `cuda-
 :filename: shell
 $ pixi init --channel file:///tmp/nanobind-cuda-example/local_channel --channel conda-forge consumer
 $ cd consumer
-$ sed -i 's/platforms = \["linux-64"\]/platforms = [{ platform = "linux-64", cuda = "13" }]/' pixi.toml
+$ sed -i 's/platforms = \["linux-64"\]/platforms = [{ name = "linux-64-cuda", platform = "linux-64", cuda = "13" }]/' pixi.toml
 $ pixi add gpu-pairwise
 ✔ Added gpu-pairwise >=0.1.0,<0.2
 $ pixi run python -c "import numpy as np, gpu_pairwise; print(gpu_pairwise.pairwise_distances(np.eye(3)))"

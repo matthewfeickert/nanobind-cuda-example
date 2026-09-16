@@ -63,7 +63,7 @@ Keep this in mind for the [distributing chapter](./distributing.md), where stage
 :linenos:
 ```
 
-Relative to stage 1 the `platforms` entry became the rich table `{ platform = "linux-64", cuda = "13" }`.
+Relative to stage 1 the `platforms` entry became the rich table `{ name = "linux-64-cuda", platform = "linux-64", cuda = "13" }`.
 That declares the CUDA driver as the `__cuda` virtual package, without which `cuda-core`'s dependency on `cuda-version` could not be satisfied.
 There is still no `[workspace.build-variants]` table, because there is still no compiler to pin.
 

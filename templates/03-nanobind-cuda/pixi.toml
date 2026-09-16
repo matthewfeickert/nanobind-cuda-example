@@ -7,7 +7,7 @@ name = "nanobind-cuda"
 channels = ["conda-forge"]
 # Declare that this platform provides a CUDA driver (the `__cuda` virtual
 # package). This is what lets the solver pick GPU-enabled builds.
-platforms = [{ platform = "linux-64", cuda = "13" }]
+platforms = [{ name = "linux-64-cuda", platform = "linux-64", cuda = "13" }]
 preview = ["pixi-build"]
 
 [dependencies]

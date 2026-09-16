@@ -104,7 +104,7 @@ Pointing `--target-channel` at a prefix.dev channel instead publishes the same p
 
 - `templates/03-nanobind-cuda/src/gpu-pairwise/pixi.toml` declares the `pixi-build-python` backend with `config.compilers = ["cxx", "cuda"]`. The backend runs `uv pip install --no-build-isolation`, so scikit-build-core and nanobind are listed as host dependencies rather than fetched from PyPI.
 - The stage 3 workspace's `[workspace.build-variants]` table pins which conda-forge package `cuda` resolves to (`cuda-nvcc` 13.1), so the build is reproducible.
-- The rich platform entry `{ platform = "linux-64", cuda = "13" }` tells the solver that this machine has a CUDA 13 driver, which is what lets it pick GPU-enabled builds.
+- The rich platform entry `{ name = "linux-64-cuda", platform = "linux-64", cuda = "13" }` tells the solver that this machine has a CUDA 13 driver, which is what lets it pick GPU-enabled builds.
 - `CMakeLists.txt` uses `nanobind_add_module` on a `.cu` source. CMake's CUDA language support drives `nvcc`; nanobind handles the Python side.
 
 ## Read the book

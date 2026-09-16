@@ -19,7 +19,8 @@ It is the same shape as the stage 1 and stage 2 workspaces, with two additions t
 The `platforms` entry is not the plain string `"linux-64"` but a table.
 The `cuda = "13"` field declares that machines using this workspace have a CUDA 13 capable driver, which Pixi exposes to the solver as the `__cuda` [virtual package](https://pixi.prefix.dev/latest/workspace/multi_platform_configuration/#declaring-virtual-packages-per-platform).
 Without it, the solver would have no reason to pick GPU enabled builds of anything, and conda-forge's CUDA packages would be unsatisfiable.
-The lock file records the resulting environment for the platform name `linux-64-cuda-13`.
+The `name` field is optional; without it Pixi would synthesise the name `linux-64-cuda-13` from the platform and its virtual packages, and giving it a stable name of our own keeps the lock file rows and any `[target.linux-64-cuda]` tables readable.
+The lock file records the resulting environment under that name.
 
 ## Source dependencies
 
