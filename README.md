@@ -101,6 +101,13 @@ builds the package and writes it into `local_channel/linux-64/gpu-pairwise-0.1.0
 ]
 ```
 
+To read a built package back without unpacking it, install [rattler-build](https://rattler.build/) as a global tool and point its inspect command at the file:
+
+```console
+pixi global install rattler-build
+rattler-build package inspect $(find ./local_channel/ -type f -iname '*pairwise*.conda')
+```
+
 Pointing `--target-channel` at a prefix.dev channel instead publishes the same package for real, and `pixi global install` can install it from either.
 
 ## How the pieces fit

@@ -73,7 +73,51 @@ The layout is a normal conda Python package: a `site-packages` directory with th
 
 ## What the package says it needs
 
-The `info/index.json` file inside the archive is the metadata every conda compatible installer reads before installing.
+[rattler-build](https://rattler.build/), the tool Pixi Build drives underneath, can read a built package back without unpacking it.
+Installing it as a global tool keeps it out of the workspace, and `find` saves typing the hashed file name.
+
+```{code} console
+:filename: shell
+$ pixi global install rattler-build
+$ rattler-build package inspect $(find ./local_channel/ -type f -iname '*pairwise*.conda')
+```
+
+```{code} text
+:filename: rattler-build package inspect
+ Package: ./local_channel/linux-64/gpu-pairwise-0.1.0-hb4504ce_0.conda (279.65 KiB)
+
+ ╭──────────────┬───────────────────────────────────────────────────────────────────────────────────────────╮
+ │ Property     ┆ Value                                                                                     │
+ ╞══════════════╪═══════════════════════════════════════════════════════════════════════════════════════════╡
+ │ Name         ┆ gpu-pairwise                                                                              │
+ │ Version      ┆ 0.1.0                                                                                     │
+ │ Build        ┆ hb4504ce_0                                                                                │
+ │ Build number ┆ 0                                                                                         │
+ │ Subdir       ┆ linux-64                                                                                  │
+ │ Timestamp    ┆ 2026-09-16 17:53:38 UTC                                                                   │
+ │ License      ┆ MIT                                                                                       │
+ │ Summary      ┆ Pairwise Euclidean distances on the GPU: a CUDA kernel exposed to NumPy through nanobind. │
+ │ Description  ┆ Pairwise Euclidean distances on the GPU: a CUDA kernel exposed to NumPy through nanobind. │
+ ╰──────────────┴───────────────────────────────────────────────────────────────────────────────────────────╯
+
+ Run dependencies:
+ ╭───────────────────────────────╮
+ │ Package                       │
+ ╞═══════════════════════════════╡
+ │ python >=3.11                 │
+ │ numpy >=2.3,<3                │
+ │ libstdcxx >=15                │
+ │ libgcc >=15                   │
+ │ cuda-version >=13.1,<14       │
+ │ __glibc >=2.28,<3.0.a0        │
+ │ cuda-cudart >=13.4.49,<14.0a0 │
+ │ python_abi 3.14.* *_cp314     │
+ ╰───────────────────────────────╯
+```
+
+The `--paths` flag adds the file listing with hashes, `--run-exports` shows what this package would in turn impose on anything built against it, and `--all` shows everything.
+
+What the inspect command is reading is the `info/index.json` file inside the archive, the metadata every conda compatible installer consults before installing.
 Its `depends` list is the payoff for the whole exercise.
 
 ```{code} json

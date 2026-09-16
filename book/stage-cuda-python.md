@@ -131,6 +131,31 @@ Package statistics: 17 files (11 content, 6 metadata), total size: 11.33 KiB
 
 The `file://` URL is the absolute path of the `local_channel` directory, reported back by Pixi; it starts with `/tmp` here only because the repository was cloned into `/tmp` when these outputs were captured.
 
+The same [`rattler-build package inspect`](./distributing.md#what-the-package-says-it-needs) command the stage 3 chapter uses reads the metadata back from the archive.
+
+```{code} console
+:filename: shell
+$ rattler-build package inspect $(find ./local_channel/ -type f -iname '*pairwise*.conda')
+```
+
+```{code} text
+:filename: rattler-build package inspect (excerpt)
+ Package: ./local_channel/noarch/pairwise-cuda-python-0.1.0-pyh4616a5c_0.conda (5.96 KiB)
+
+ Run dependencies:
+ ╭───────────────────╮
+ │ Package           │
+ ╞═══════════════════╡
+ │ cuda-version 13.* │
+ │ python >=3.11     │
+ │ python *          │
+ │ numpy >=2.3,<3    │
+ │ cuda-core >=1.2   │
+ ╰───────────────────╯
+```
+
+The full `info/index.json` it summarises is short enough to read whole.
+
 ```{code} json
 :filename: info/index.json
 {
