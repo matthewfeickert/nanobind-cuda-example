@@ -12,7 +12,7 @@ The name `local_channel` follows the direction of [pixi issue #6600](https://git
 
 ```{code} console
 :filename: shell
-$ pixi publish --path templates/03-nanobind-cuda/packages/gpu-pairwise --target-channel ./local_channel
+$ pixi publish --path templates/04-nanobind-cuda/packages/gpu-pairwise --target-channel ./local_channel
 ```
 
 The output is the same build the workspace ran on first install, followed by the packaging and indexing steps.
@@ -64,7 +64,7 @@ local_channel/
     └── repodata.json
 ```
 
-The package went into the `linux-64` subdirectory because it is platform specific; the stage 2 package, being `noarch`, lands under `noarch/` instead.
+The package went into the `linux-64` subdirectory because it is platform specific; the stage 3 package, being `noarch`, lands under `noarch/` instead.
 Next to it Pixi wrote `repodata.json`, the index that every conda compatible solver reads, in both its plain and its sharded form.
 That is what makes the directory a channel rather than a folder of files.
 
@@ -153,7 +153,7 @@ It needs a glibc no older than the sysroot it was built with.
 
 None of that was written by hand.
 The manifest listed one CUDA host dependency and let conda-forge's run-exports do the rest.
-Compare the `depends` list of the [stage 2 package](./stage-cuda-python.md), where the only CUDA constraint is the one its author remembered to type.
+Compare the `depends` list of the [stage 3 package](./stage-cuda-python.md), where the only CUDA constraint is the one its author remembered to type.
 Rebuilding for a different Python or CUDA version is a matter of changing the pins in the workspace and running `pixi publish` again.
 
 ## Installing from the local channel

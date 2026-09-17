@@ -5,8 +5,8 @@ This chapter walks through it in four pieces.
 
 ## Error handling and device memory
 
-```{literalinclude} ../templates/03-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
-:filename: templates/03-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
+```{literalinclude} ../templates/04-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
+:filename: templates/04-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
 :language: cpp
 :lines: 22-36
 ```
@@ -17,8 +17,8 @@ The `DeviceBuffer` type frees its allocation in its destructor, so an exception 
 
 ## The kernel
 
-```{literalinclude} ../templates/03-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
-:filename: templates/03-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
+```{literalinclude} ../templates/04-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
+:filename: templates/04-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
 :language: cpp
 :lines: 38-53
 ```
@@ -30,8 +30,8 @@ It is enough to show a real speedup over the CPU references, and the [next steps
 
 ## The binding function
 
-```{literalinclude} ../templates/03-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
-:filename: templates/03-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
+```{literalinclude} ../templates/04-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
+:filename: templates/04-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
 :language: cpp
 :lines: 55-83
 ```
@@ -45,8 +45,8 @@ The `nb::capsule` hands ownership of that buffer to the returned NumPy array, so
 
 ## The module definition
 
-```{literalinclude} ../templates/03-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
-:filename: templates/03-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
+```{literalinclude} ../templates/04-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
+:filename: templates/04-nanobind-cuda/packages/gpu-pairwise/src/pairwise.cu
 :language: cpp
 :lines: 87-101
 ```
@@ -56,8 +56,8 @@ The `device_name` helper exists so the demo and benchmark can say which GPU they
 
 ## The Python wrapper
 
-```{literalinclude} ../templates/03-nanobind-cuda/packages/gpu-pairwise/src/gpu_pairwise/__init__.py
-:filename: templates/03-nanobind-cuda/packages/gpu-pairwise/src/gpu_pairwise/__init__.py
+```{literalinclude} ../templates/04-nanobind-cuda/packages/gpu-pairwise/src/gpu_pairwise/__init__.py
+:filename: templates/04-nanobind-cuda/packages/gpu-pairwise/src/gpu_pairwise/__init__.py
 :language: python
 :linenos:
 ```
@@ -68,8 +68,8 @@ Doing this in Python keeps the C++ side simple and the behaviour easy to test.
 
 ## The tests
 
-```{literalinclude} ../templates/03-nanobind-cuda/packages/gpu-pairwise/tests/test_pairwise.py
-:filename: templates/03-nanobind-cuda/packages/gpu-pairwise/tests/test_pairwise.py
+```{literalinclude} ../templates/04-nanobind-cuda/packages/gpu-pairwise/tests/test_pairwise.py
+:filename: templates/04-nanobind-cuda/packages/gpu-pairwise/tests/test_pairwise.py
 :language: python
 :linenos:
 ```

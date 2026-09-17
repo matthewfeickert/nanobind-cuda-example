@@ -1,25 +1,25 @@
-# Stage 2: cuda-python, the kernel compiled at runtime
+# Stage 3: cuda-python, the kernel compiled at runtime
 
-The first GPU port keeps the package pure Python.
-The hot loop becomes a CUDA kernel, but the kernel ships as source text and is compiled on the user's machine the first time the function is called.
+The first hand-written kernel keeps the package pure Python.
+[Stage 2](./stage-jax.md) got onto the GPU without one; here the hot loop becomes a CUDA kernel, but the kernel ships as source text and is compiled on the user's machine the first time the function is called.
 The tool that makes this possible is [cuda-python](https://github.com/NVIDIA/cuda-python), NVIDIA's own Python bindings for CUDA, and specifically its `cuda.core` layer, which wraps NVRTC, device memory, streams, and kernel launches in Python objects.
 
 ## The kernel
 
-```{literalinclude} ../templates/02-cuda-python/packages/pairwise-cuda-python/src/pairwise_cuda_python/pairwise.cu
-:filename: templates/02-cuda-python/packages/pairwise-cuda-python/src/pairwise_cuda_python/pairwise.cu
+```{literalinclude} ../templates/03-cuda-python/packages/pairwise-cuda-python/src/pairwise_cuda_python/pairwise.cu
+:filename: templates/03-cuda-python/packages/pairwise-cuda-python/src/pairwise_cuda_python/pairwise.cu
 :language: cpp
 :linenos:
 ```
 
 This file is the kernel and nothing else.
 Each thread computes one output element by looping over the feature dimension, the same one-thread-per-element formulation that stage 1 expressed as a broadcast.
-It is byte for byte the kernel that stage 3 will compile with `nvcc`; stage 3 adds the bindings around it, not a different kernel.
+It is byte for byte the kernel that stage 4 will compile with `nvcc`; stage 4 adds the bindings around it, not a different kernel.
 
 ## Driving it from Python
 
-```{literalinclude} ../templates/02-cuda-python/packages/pairwise-cuda-python/src/pairwise_cuda_python/__init__.py
-:filename: templates/02-cuda-python/packages/pairwise-cuda-python/src/pairwise_cuda_python/__init__.py
+```{literalinclude} ../templates/03-cuda-python/packages/pairwise-cuda-python/src/pairwise_cuda_python/__init__.py
+:filename: templates/03-cuda-python/packages/pairwise-cuda-python/src/pairwise_cuda_python/__init__.py
 :language: python
 :linenos:
 ```
@@ -28,20 +28,20 @@ The `_kernel` helper is the compile step.
 On first use it reads `pairwise.cu` from the installed package, hands it to NVRTC through a `Program` with the compute capability of the GPU that is actually present, and asks for both template instantiations by name.
 The compiled module is cached for the rest of the process, so the cost is paid once and the benchmark's warm-up call absorbs it.
 
-The body of `pairwise_distances` is what the C++ binding function in stage 3 does, written out in Python.
+The body of `pairwise_distances` is what the C++ binding function in stage 4 does, written out in Python.
 `cuda.core` copies between its own `Buffer` objects, so the NumPy inputs are first written into page-locked host buffers, which NumPy can view through DLPack, and then copied to device buffers on a stream.
-The launch uses the same `(32, 8)` thread block as stage 3, the result comes back through another pinned buffer, and a `finally` block closes every allocation whether or not the launch succeeded.
+The launch uses the same `(32, 8)` thread block as stage 4, the result comes back through another pinned buffer, and a `finally` block closes every allocation whether or not the launch succeeded.
 
 ## The package
 
-```{literalinclude} ../templates/02-cuda-python/packages/pairwise-cuda-python/pyproject.toml
-:filename: templates/02-cuda-python/packages/pairwise-cuda-python/pyproject.toml
+```{literalinclude} ../templates/03-cuda-python/packages/pairwise-cuda-python/pyproject.toml
+:filename: templates/03-cuda-python/packages/pairwise-cuda-python/pyproject.toml
 :language: toml
 :linenos:
 ```
 
-```{literalinclude} ../templates/02-cuda-python/packages/pairwise-cuda-python/pixi.toml
-:filename: templates/02-cuda-python/packages/pairwise-cuda-python/pixi.toml
+```{literalinclude} ../templates/03-cuda-python/packages/pairwise-cuda-python/pixi.toml
+:filename: templates/03-cuda-python/packages/pairwise-cuda-python/pixi.toml
 :language: toml
 :linenos:
 ```
@@ -53,12 +53,12 @@ It gained a `[package.run-dependencies]` table, and that table is the lesson of 
 A pure Python package links against nothing, so nothing tells conda which generation of CUDA it needs.
 Without the `cuda-version = "13.*"` line the solver would be free to pick the CUDA 12 build of `cuda-core`, whose NVRTC could not target a driver from the CUDA 13 era, and the failure would only show up at first call.
 The pin has to be written by hand.
-Keep this in mind for the [distributing chapter](./distributing.md), where stage 3 gets the equivalent constraint for free.
+Keep this in mind for the [distributing chapter](./distributing.md), where stage 4 gets the equivalent constraint for free.
 
 ## The workspace
 
-```{literalinclude} ../templates/02-cuda-python/pixi.toml
-:filename: templates/02-cuda-python/pixi.toml
+```{literalinclude} ../templates/03-cuda-python/pixi.toml
+:filename: templates/03-cuda-python/pixi.toml
 :language: toml
 :linenos:
 ```
@@ -124,14 +124,14 @@ Files in package:
 
 Package statistics: 17 files (11 content, 6 metadata), total size: 11.33 KiB
 
-📦 Publishing 1 package(s) to channel file:///tmp/nanobind-cuda-example/templates/02-cuda-python/local_channel
-✔ Successfully published 1 package(s) to channel file:///tmp/nanobind-cuda-example/templates/02-cuda-python/local_channel
+📦 Publishing 1 package(s) to channel file:///tmp/nanobind-cuda-example/templates/03-cuda-python/local_channel
+✔ Successfully published 1 package(s) to channel file:///tmp/nanobind-cuda-example/templates/03-cuda-python/local_channel
   - pairwise-cuda-python-0.1.0-pyh4616a5c_0.conda
 ```
 
 The `file://` URL is the absolute path of the `local_channel` directory, reported back by Pixi; it starts with `/tmp` here only because the repository was cloned into `/tmp` when these outputs were captured.
 
-The same [`rattler-build package inspect`](./distributing.md#what-the-package-says-it-needs) command the stage 3 chapter uses reads the metadata back from the archive.
+The same [`rattler-build package inspect`](./distributing.md#what-the-package-says-it-needs) command the stage 4 chapter uses reads the metadata back from the archive.
 
 ```{code} console
 :filename: shell
@@ -177,7 +177,7 @@ The full `info/index.json` it summarises is short enough to read whole.
 ```
 
 The package is eleven kilobytes, it is `noarch`, and the `.cu` file is sitting inside it as text.
-Every entry in `depends` was written by a human in one of the two manifests, and the `RE of` column that fills the equivalent table for stage 3 is empty here apart from the Python pin.
+Every entry in `depends` was written by a human in one of the two manifests, and the `RE of` column that fills the equivalent table for stage 4 is empty here apart from the Python pin.
 
 This is a complete, working GPU package.
-Whether to go on to [stage 3](./stage-nanobind.md) depends on who it is for, and that chapter opens with the trade-off.
+Whether to go on to [stage 4](./stage-nanobind.md) depends on who it is for, and that chapter opens with the trade-off.

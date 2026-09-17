@@ -9,4 +9,4 @@ pixi run test     # pytest against scipy.spatial.distance.cdist
 pixi publish --path packages/pairwise-numpy --target-channel ./local_channel   # a noarch .conda file in a local channel
 ```
 
-The same function is reimplemented on the GPU in [stage 2](../02-cuda-python) and [stage 3](../03-nanobind-cuda) with an identical signature, so the three packages are drop-in replacements for each other.
+The same function is reimplemented on the GPU in [stage 2](../02-jax), [stage 3](../03-cuda-python), and [stage 4](../04-nanobind-cuda) with an identical signature, so the four packages are drop-in replacements for each other.

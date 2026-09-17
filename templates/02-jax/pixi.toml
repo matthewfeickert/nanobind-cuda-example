@@ -1,19 +1,19 @@
-# ── Stage 3: the cuda-python workspace ─────────────────────────────────────
-# One workspace that builds one source package from ./src:
-#   * pairwise-cuda-python — a pure Python package whose CUDA kernel is
-#     compiled at runtime by NVRTC through cuda.core.
+# ── Stage 2: the JAX workspace ─────────────────────────────────────────────
+# One workspace that builds one source package from ./packages:
+#   * pairwise-jax — a pure Python package whose array program XLA compiles
+#     for the GPU at first call. No kernel is written.
 [workspace]
-name = "cuda-python"
+name = "jax"
 channels = ["conda-forge"]
 # Declare that this platform provides a CUDA driver (the `__cuda` virtual
-# package). Without it the solver cannot satisfy cuda-core's dependencies.
+# package). jaxlib's CUDA builds require it.
 platforms = [{ name = "linux-64-cuda", platform = "linux-64", cuda = "13" }]
 preview = ["pixi-build"]
 
 [dependencies]
 # Our own package as a source dependency: `pixi run` and `pixi install`
 # rebuild it automatically whenever its sources change.
-pairwise-cuda-python = { path = "packages/pairwise-cuda-python" }
+pairwise-jax = { path = "packages/pairwise-jax" }
 numpy = ">=2.3"
 # The reference implementation the benchmark and the tests compare against.
 scipy = ">=1.16"
@@ -31,11 +31,11 @@ description = "Smallest possible end-to-end use of the package"
 
 [tasks.bench]
 cmd = "python scripts/bench.py"
-description = "Time pairwise distances: SciPy vs the NVRTC-compiled kernel"
+description = "Time pairwise distances: SciPy vs the XLA-compiled broadcast"
 
 [feature.test.tasks.test]
-cmd = "pytest -v packages/pairwise-cuda-python/tests"
-description = "Check the NVRTC-compiled kernel against scipy.spatial.distance.cdist"
+cmd = "pytest -v packages/pairwise-jax/tests"
+description = "Check the JAX implementation against scipy.spatial.distance.cdist"
 
 # No [workspace.build-variants]: there is no compiler to pin because nothing
 # is compiled when the package is built.
