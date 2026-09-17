@@ -1,6 +1,6 @@
-# ── The umbrella workspace: all three stages side by side ──────────────────
+# ── The umbrella workspace: all four stages side by side ──────────────────
 # Each stage under ./templates is a self-contained workspace of its own. This
-# manifest pulls the three packages into one environment so a single benchmark
+# manifest pulls the four packages into one environment so a single benchmark
 # can compare them, and it builds the book.
 [workspace]
 name = "nanobind-cuda-example"
@@ -11,11 +11,12 @@ platforms = [{ name = "linux-64-cuda", platform = "linux-64", cuda = "13" }]
 preview = ["pixi-build"]
 
 [dependencies]
-# The three stages as source dependencies: `pixi run` and `pixi install`
+# The four stages as source dependencies: `pixi run` and `pixi install`
 # rebuild them automatically whenever their sources change.
 pairwise-numpy = { path = "templates/01-numpy/packages/pairwise-numpy" }
-pairwise-cuda-python = { path = "templates/02-cuda-python/packages/pairwise-cuda-python" }
-gpu-pairwise = { path = "templates/03-nanobind-cuda/packages/gpu-pairwise" }
+pairwise-jax = { path = "templates/02-jax/packages/pairwise-jax" }
+pairwise-cuda-python = { path = "templates/03-cuda-python/packages/pairwise-cuda-python" }
+gpu-pairwise = { path = "templates/04-nanobind-cuda/packages/gpu-pairwise" }
 # Used by the benchmark and the tests as CPU references.
 numpy = ">=2.3"
 scipy = ">=1.16"
@@ -38,12 +39,16 @@ lint = { features = ["lint"], no-default-feature = true }
 # ── Tasks ───────────────────────────────────────────────────────────────────
 [tasks.bench]
 cmd = "python scripts/bench.py"
-description = "Time all three stages against SciPy and scikit-learn"
+description = "Time all four stages against SciPy and scikit-learn"
+# JAX preallocates 75% of device memory when its CUDA backend starts, which
+# would starve the cuda-python and nanobind stages running in the same
+# process. Make it allocate on demand instead.
+env = { XLA_PYTHON_CLIENT_PREALLOCATE = "false" }
 
 [feature.test.tasks.test]
-cmd = "pytest -v --import-mode=importlib --rootdir . templates/01-numpy/packages/pairwise-numpy/tests templates/02-cuda-python/packages/pairwise-cuda-python/tests templates/03-nanobind-cuda/packages/gpu-pairwise/tests"
-# importlib mode because the three suites share the file name test_pairwise.py.
-description = "Run the test suites of all three stages"
+cmd = "pytest -v --import-mode=importlib --rootdir . templates/01-numpy/packages/pairwise-numpy/tests templates/02-jax/packages/pairwise-jax/tests templates/03-cuda-python/packages/pairwise-cuda-python/tests templates/04-nanobind-cuda/packages/gpu-pairwise/tests"
+# importlib mode because the four suites share the file name test_pairwise.py.
+description = "Run the test suites of all four stages"
 
 [feature.docs.tasks.docs-build]
 cmd = "myst build --html"
@@ -60,7 +65,7 @@ cmd = "prek run --all-files"
 description = "Run the pre-commit hooks in .pre-commit-config.yaml on every file"
 
 # Pin which CUDA compiler package the build backend resolves
-# `compilers = ["cuda"]` to for stage 3. On conda-forge, CUDA 12+ compilers
+# `compilers = ["cuda"]` to for stage 4. On conda-forge, CUDA 12+ compilers
 # live in the `cuda-nvcc` packages.
 [workspace.build-variants]
 cuda_compiler = ["cuda-nvcc"]

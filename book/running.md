@@ -1,6 +1,6 @@
 # Running it
 
-This chapter shows what happens when the stage 3 workspace in `templates/03-nanobind-cuda` is used.
+This chapter shows what happens when the stage 4 workspace in `templates/04-nanobind-cuda` is used.
 All outputs were captured on a laptop with an NVIDIA GeForce RTX 4060 Laptop GPU, driver 595.91, and Pixi 0.81.0.
 Lines that only repeat information have been trimmed and the trimming is marked.
 
@@ -84,8 +84,8 @@ On this laptop the compile for all major GPU architectures took about 25 seconds
 
 ## `pixi run demo`
 
-```{literalinclude} ../templates/03-nanobind-cuda/scripts/demo.py
-:filename: templates/03-nanobind-cuda/scripts/demo.py
+```{literalinclude} ../templates/04-nanobind-cuda/scripts/demo.py
+:filename: templates/04-nanobind-cuda/scripts/demo.py
 :language: python
 ```
 
@@ -106,8 +106,8 @@ The matrix is symmetric with a zero diagonal, which is the quickest sanity check
 ```{code} text
 :filename: pixi run test
 ============================= test session starts ==============================
-platform linux -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0 -- /tmp/nanobind-cuda-example/templates/03-nanobind-cuda/.pixi/envs/test/bin/python3.14
-rootdir: /tmp/nanobind-cuda-example/templates/03-nanobind-cuda/packages/gpu-pairwise
+platform linux -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0 -- /tmp/nanobind-cuda-example/templates/04-nanobind-cuda/.pixi/envs/test/bin/python3.14
+rootdir: /tmp/nanobind-cuda-example/templates/04-nanobind-cuda/packages/gpu-pairwise
 configfile: pyproject.toml
 collecting ... collected 9 items
 
@@ -129,8 +129,8 @@ Pixi built the package once and installed the same artifact into both environmen
 
 ## `pixi run bench`
 
-```{literalinclude} ../templates/03-nanobind-cuda/scripts/bench.py
-:filename: templates/03-nanobind-cuda/scripts/bench.py
+```{literalinclude} ../templates/04-nanobind-cuda/scripts/bench.py
+:filename: templates/04-nanobind-cuda/scripts/bench.py
 :language: python
 ```
 

@@ -1,17 +1,18 @@
 # Templates
 
-Three self-contained Pixi workspaces, one per stage of speeding up the same Python package. Each has its own `pixi.toml`, lock file, scripts, tests, and one source package, and each exposes the same `pairwise_distances(x, y=None)` function so the three are drop-in replacements for each other.
+Four self-contained Pixi workspaces, one per stage of speeding up the same Python package. Each has its own `pixi.toml`, lock file, scripts, tests, and one source package, and each exposes the same `pairwise_distances(x, y=None)` function so the four are drop-in replacements for each other.
 
 | Stage | Directory | What it is | Package type |
 |---|---|---|---|
 | 1 | [`01-numpy`](01-numpy) | NumPy broadcasting on the CPU. The baseline and the loop to port. | `noarch: python` |
-| 2 | [`02-cuda-python`](02-cuda-python) | The CUDA kernel shipped as source, compiled at first use by NVRTC through `cuda.core`. | `noarch: python`, CUDA pin written by hand |
-| 3 | [`03-nanobind-cuda`](03-nanobind-cuda) | The same kernel compiled by `nvcc` at build time into a nanobind extension. | `linux-64`, CUDA pin derived from run-exports |
+| 2 | [`02-jax`](02-jax) | The same broadcast in `jax.numpy`, compiled by XLA for the GPU. No kernel. | `noarch: python`, CUDA build of jaxlib pinned by hand |
+| 3 | [`03-cuda-python`](03-cuda-python) | The CUDA kernel shipped as source, compiled at first use by NVRTC through `cuda.core`. | `noarch: python`, CUDA pin written by hand |
+| 4 | [`04-nanobind-cuda`](04-nanobind-cuda) | The same kernel compiled by `nvcc` at build time into a nanobind extension. | `linux-64`, CUDA pin derived from run-exports |
 
 Copy a directory out of the repository to start from that stage:
 
 ```console
-cp -r templates/02-cuda-python my-project
+cp -r templates/02-jax my-project
 cd my-project && pixi run test
 ```
 

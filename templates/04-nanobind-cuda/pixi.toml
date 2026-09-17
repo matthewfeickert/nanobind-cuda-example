@@ -1,4 +1,4 @@
-# ── Stage 3: the nanobind + CUDA kernel workspace ──────────────────────────
+# ── Stage 4: the nanobind + CUDA kernel workspace ──────────────────────────
 # One workspace that builds one source package from ./src:
 #   * gpu-pairwise — a Python extension module (nanobind) wrapping a CUDA
 #     kernel, built through the pixi-build-python backend + scikit-build-core.

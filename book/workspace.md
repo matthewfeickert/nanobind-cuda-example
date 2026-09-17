@@ -5,11 +5,11 @@ A manifest with a `[workspace]` table describes your development environment: ch
 A manifest with a `[package]` table and no `[workspace]` table describes how to build one distributable conda package.
 The [Pixi manifest reference](https://pixi.prefix.dev/latest/reference/pixi_manifest/) covers both roles in full.
 
-This chapter is about the stage 3 workspace, `templates/03-nanobind-cuda/pixi.toml`.
-It is the same shape as the stage 1 and stage 2 workspaces, with two additions that only a compiled CUDA extension needs: a source dependency that has to be built, and a build variant that pins the CUDA compiler.
+This chapter is about the stage 4 workspace, `templates/04-nanobind-cuda/pixi.toml`.
+It is the same shape as the stage 1 and stage 3 workspaces, with two additions that only a compiled CUDA extension needs: a source dependency that has to be built, and a build variant that pins the CUDA compiler.
 
-```{literalinclude} ../templates/03-nanobind-cuda/pixi.toml
-:filename: templates/03-nanobind-cuda/pixi.toml
+```{literalinclude} ../templates/04-nanobind-cuda/pixi.toml
+:filename: templates/04-nanobind-cuda/pixi.toml
 :language: toml
 :linenos:
 ```
@@ -42,8 +42,8 @@ The umbrella workspace at the top of the repository does the same for this book 
 
 The last table is the one that ties the workspace to the CUDA toolchain.
 
-```{literalinclude} ../templates/03-nanobind-cuda/pixi.toml
-:filename: templates/03-nanobind-cuda/pixi.toml
+```{literalinclude} ../templates/04-nanobind-cuda/pixi.toml
+:filename: templates/04-nanobind-cuda/pixi.toml
 :language: toml
 :start-at: workspace.build-variants
 ```

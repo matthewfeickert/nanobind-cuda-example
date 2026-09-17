@@ -1,12 +1,11 @@
-# ── The pairwise-cuda-python package: what `pixi publish` turns into a .conda file
+# ── The pairwise-jax package: what `pixi publish` turns into a .conda file ─
 # A *package* manifest only (no `[workspace]`). Name, version and runtime
 # dependencies are read from the adjacent pyproject.toml. The workspace that
 # consumes it lives in ../../pixi.toml.
 [package.build]
 backend = { name = "pixi-build-python", version = "0.*" }
-# Still nothing to compile at build time: the kernel is compiled by NVRTC when
-# the package is first used. So no `config.compilers`, and the package is
-# `noarch: python` exactly like stage 1.
+# Nothing is compiled: XLA compiles the array program at first call. So no
+# `config.compilers`, and the package is `noarch: python` exactly like stage 1.
 # Map `[project.dependencies]` in pyproject.toml onto conda-forge packages.
 config.ignore-pypi-mapping = false
 
@@ -16,8 +15,9 @@ config.ignore-pypi-mapping = false
 hatchling = "*"
 
 [package.run-dependencies]
-# The pure Python package has no linked libraries, so nothing tells conda
-# which CUDA generation it needs. Stage 3 gets this for free from the
-# run-export of its `cuda-cudart-dev` host dependency; here it is written by
-# hand so the solver picks the CUDA 13 builds of cuda-core and cuda-bindings.
+# `jax` on PyPI is the pure Python front end; the GPU support lives in
+# `jaxlib`, which conda-forge builds once per CUDA generation and once for
+# the CPU. Nothing in pyproject.toml can express "the CUDA 13 build", so the
+# choice is written here, by hand, as a build string constraint.
+jaxlib = { version = "*", build = "cuda13*" }
 cuda-version = "13.*"

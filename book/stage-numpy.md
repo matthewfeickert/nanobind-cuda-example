@@ -33,7 +33,7 @@ There it feeds a kernel with strict expectations; here it only keeps the behavio
 ```
 
 The `pyproject.toml` is an ordinary [hatchling](https://hatch.pypa.io/latest/) project.
-The Pixi package manifest next to it is shorter than the one in stage 3 in two ways.
+The Pixi package manifest next to it is shorter than the one in stage 4 in two ways.
 There is no `config.compilers` line, and without one the `pixi-build-python` backend produces a `noarch: python` package that installs on any platform.
 There is also no `cuda-cudart-dev` host dependency, because there is nothing to link against; the only host dependency is `hatchling` itself, which has to be there because the backend installs with `--no-build-isolation` and so never fetches the build backend from PyPI.
 
@@ -47,7 +47,7 @@ There is also no `cuda-cudart-dev` host dependency, because there is nothing to 
 
 The `platforms` entry is the plain string `"linux-64"`.
 Nothing in this workspace needs a GPU driver, so there is no `cuda = "13"` and no `__cuda` virtual package for the solver to consider.
-Compare this with the [stage 2 workspace](./stage-cuda-python.md), which is one line different.
+Compare this with the [stage 3 workspace](./stage-cuda-python.md), which is one line different.
 
 ## Running it
 
@@ -77,4 +77,4 @@ This matrix is the reference the GPU stages have to reproduce, and their demos p
 ```
 
 NumPy broadcasting is three to four times slower than `scipy.spatial.distance.cdist`, which is a compiled C loop over the same data.
-That is the hot loop the next two stages move to the GPU.
+That is the hot loop the next three stages move to the GPU.

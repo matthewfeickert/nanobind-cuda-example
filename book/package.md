@@ -8,8 +8,8 @@ The `CMakeLists.txt` compiles the extension.
 
 ## The package manifest
 
-```{literalinclude} ../templates/03-nanobind-cuda/packages/gpu-pairwise/pixi.toml
-:filename: templates/03-nanobind-cuda/packages/gpu-pairwise/pixi.toml
+```{literalinclude} ../templates/04-nanobind-cuda/packages/gpu-pairwise/pixi.toml
+:filename: templates/04-nanobind-cuda/packages/gpu-pairwise/pixi.toml
 :language: toml
 :linenos:
 ```
@@ -38,8 +38,8 @@ The [distributing chapter](./distributing.md) shows how they are derived from th
 
 ## The Python project
 
-```{literalinclude} ../templates/03-nanobind-cuda/packages/gpu-pairwise/pyproject.toml
-:filename: templates/03-nanobind-cuda/packages/gpu-pairwise/pyproject.toml
+```{literalinclude} ../templates/04-nanobind-cuda/packages/gpu-pairwise/pyproject.toml
+:filename: templates/04-nanobind-cuda/packages/gpu-pairwise/pyproject.toml
 :language: toml
 :linenos:
 ```
@@ -54,8 +54,8 @@ scikit-build-core prefers Ninja only when no `CMAKE_GENERATOR` is set, and rattl
 
 ## The CMake configuration
 
-```{literalinclude} ../templates/03-nanobind-cuda/packages/gpu-pairwise/CMakeLists.txt
-:filename: templates/03-nanobind-cuda/packages/gpu-pairwise/CMakeLists.txt
+```{literalinclude} ../templates/04-nanobind-cuda/packages/gpu-pairwise/CMakeLists.txt
+:filename: templates/04-nanobind-cuda/packages/gpu-pairwise/CMakeLists.txt
 :language: cmake
 :linenos:
 ```

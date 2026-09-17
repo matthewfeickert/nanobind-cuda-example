@@ -10,7 +10,7 @@ A production pairwise distance uses the expansion `||x - y||² = ||x||² + ||y||
 Adding `libcublas-dev` as a host dependency and linking against it is a one line change in each of the package manifest and `CMakeLists.txt`.
 
 The kernel is compiled for every major architecture, and only ahead of time.
-Stage 2 showed the other choice, compiling with NVRTC on the user's machine for the GPU that is present, which is what libraries such as CuPy do for user-supplied kernels.
+Stage 3 showed the other choice, compiling with NVRTC on the user's machine for the GPU that is present, which is what libraries such as CuPy do for user-supplied kernels.
 A package can also do both, shipping a fat binary and falling back to runtime compilation for an architecture newer than its build.
 
 The inputs and outputs live on the host.

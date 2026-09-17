@@ -6,7 +6,7 @@
 name = "numpy-baseline"
 channels = ["conda-forge"]
 # Nothing here touches a GPU, so this is a plain platform string. Compare with
-# the `cuda = "13"` rich platform in stages 2 and 3.
+# the `cuda = "13"` rich platform in stages 2 to 4.
 platforms = ["linux-64"]
 preview = ["pixi-build"]
 

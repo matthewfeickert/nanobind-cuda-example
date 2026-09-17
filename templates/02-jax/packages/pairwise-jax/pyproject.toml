@@ -1,0 +1,18 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pairwise-jax"
+version = "0.1.0"
+description = "Pairwise Euclidean distances on the GPU with JAX: the broadcast written in jax.numpy and compiled by XLA."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+    "numpy>=2.3",
+    "jax>=0.10",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pairwise_jax"]
